@@ -15,17 +15,33 @@ import { format } from "date-fns";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { theme } from "../../shared/theme";
 import { CONSTANTS } from "../../shared/constants";
-import { getRandomColor } from "../../services/uiService";
+import { getRandomColor, truncateString } from "../../services/uiService";
 
-const NoteCard = ({ orientation, index }) => {
+type Props = {
+  orientation: "horizontal" | "vertical";
+  index: number;
+};
+
+const NoteCard = ({ orientation, index }: Props) => {
   const { navigate } = useNavigation<NavigationProp<any>>();
 
   return (
-    <TouchableOpacity onPress={() => navigate(CONSTANTS.AppPages.NOTE)}>
+    <TouchableOpacity
+      onPress={() =>
+        navigate(CONSTANTS.AppPages.NOTE, {
+          note: {
+            noteId: index,
+            title: "Hello world",
+            content:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+          },
+        })
+      }
+    >
       <Box
         // minH={"250"}
         // maxH={"300"}
-        w={orientation === "horizontal" ? "300" : "full"}
+        w={orientation === "horizontal" ? "360" : "full"}
         p="3"
         borderRadius={10}
         bgColor={theme.ACCENT}
@@ -89,14 +105,13 @@ const NoteCard = ({ orientation, index }) => {
           <Text
             color={theme.FOREGROUND_2}
             fontSize={"xs"}
-            fontWeight={"semibold"}
+            fontWeight={"normal"}
             lineHeight={22}
           >
-            {" Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.".slice(
-              0,
+            {truncateString(
+              " Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
               200
             )}
-            ...
           </Text>
         </VStack>
       </Box>

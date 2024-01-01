@@ -29,7 +29,7 @@ const TabNavigator = () => {
         <Iconify
           icon="solar:home-smile-outline"
           size={22}
-          color={theme.FOREGROUND}
+          color={theme.FOREGROUND_2}
           strokeWidth={20}
         />
       ),
@@ -50,7 +50,7 @@ const TabNavigator = () => {
         <Iconify
           icon="solar:documents-outline"
           size={22}
-          color={theme.FOREGROUND}
+          color={theme.FOREGROUND_2}
           strokeWidth={20}
         />
       ),
@@ -71,7 +71,7 @@ const TabNavigator = () => {
         <Iconify
           icon="solar:square-academic-cap-outline"
           size={22}
-          color={theme.FOREGROUND}
+          color={theme.FOREGROUND_2}
           strokeWidth={20}
         />
       ),
@@ -92,7 +92,7 @@ const TabNavigator = () => {
         <Iconify
           icon="solar:calendar-outline"
           size={22}
-          color={theme.FOREGROUND}
+          color={theme.FOREGROUND_2}
           strokeWidth={20}
         />
       ),
@@ -114,7 +114,7 @@ const TabNavigator = () => {
         <Iconify
           icon="solar:user-outline"
           size={22}
-          color={theme.FOREGROUND}
+          color={theme.FOREGROUND_2}
           strokeWidth={20}
         />
       ),
@@ -158,7 +158,7 @@ const TabNavigator = () => {
                   ? () => <WelcomeBanner />
                   : _.label,
               headerTitleStyle: {
-                color: `${theme.FOREGROUND}`,
+                color: `${theme.FOREGROUND_2}`,
                 fontWeight: "800",
                 fontFamily: "Poppins-bold",
               },

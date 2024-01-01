@@ -1,29 +1,23 @@
-import {
-  Animated,
-  Dimensions,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { Dimensions } from "react-native";
 import React, { useState } from "react";
 import FabButton from "../../components/FabButton";
 import { Iconify } from "react-native-iconify";
-import { SceneMap, TabView } from "react-native-tab-view";
-import Classes from "./Classes";
-import Exams from "./Exams";
-import Tasks from "./Tasks";
-import { Button, Heading, IconButton, View } from "native-base";
-import { useNavigation } from "@react-navigation/native";
+import { TabBarProps, TabView } from "react-native-tab-view";
+import { Button, View } from "native-base";
 import { CONSTANTS } from "../../shared/constants";
 import { theme } from "../../shared/theme";
 import { NavigationProps } from "../../shared/types";
+import MainContent from "../../components/MainContent";
+import Exams from "../Exams/Exams";
+import Classes from "../Classes/Classes";
+import Tasks from "../Tasks/Tasks";
 
 const { AppPages } = CONSTANTS;
 
 const Schedule = (props: NavigationProps) => {
   const [index, setIndex] = useState(0);
 
-  const [routes] = useState([
+  const [routes] = useState<{ key: string; title: string }[]>([
     {
       key: "classes",
       title: "Classes",
@@ -37,8 +31,6 @@ const Schedule = (props: NavigationProps) => {
       title: "Tasks",
     },
   ]);
-
-  const navigation = useNavigation();
 
   const renderScene = ({ route }) => {
     switch (route.key) {
@@ -59,65 +51,57 @@ const Schedule = (props: NavigationProps) => {
   //   tasks: Tasks,
   // });
 
-  const _renderTabBar = (_props) => {
+  const _renderTabBar = (_props: TabBarProps<any>) => {
     return (
-      <View
-        w="full"
-        flexDir={"row"}
-        bgColor={theme.ACCENT}
-        px="2"
-        py="2"
-        mb="2"
-        shadow={"2"}
-      >
-        {_props.navigationState.routes.map((route, i) => {
-          const isActive = index === i;
-          return (
-            // <TouchableOpacity
-            //   key={i}
-            //   style={[styles.tabItem, isActive ? styles.tabItemActive : null]}
-            //   onPress={() => setIndex(i)}
-            // >
-            //   <Animated.Text
-            //     style={{
-            //       ...styles.textStyle,
-            //       color: isActive ? "red" : "blue",
-            //     }}
-            //   >
-            //     {route.title}
-            //   </Animated.Text>
-            // </TouchableOpacity>
-            <Button
-              // flex={1}
-              variant={"unstyled"}
-              colorScheme={"coolGray"}
-              bgColor={isActive ? theme.ACCENT : theme.ACCENT}
-              size="xs"
-              display={"flex"}
-              flexDirection={"row"}
-              alignItems={"flex-start"}
-              _text={{
-                color: isActive ? "coolGray.400" : "coolGray.600",
-                fontSize: "xs",
-                fontWeight: "bold",
-              }}
-              _icon={{
-                color: isActive ? "coolGray.400" : "coolGray.600",
-              }}
-              rounded={10}
-              minW={"20"}
-              mr={"4"}
-              onPress={() => _props.jumpTo(route.key)}
-            >
-              {route.title}
-            </Button>
-          );
-        })}
+      <View py="4" w="full">
+        <View w="full" flexDir={"row"}>
+          {_props.navigationState.routes.map((route, i) => {
+            const isActive = index === i;
+            return (
+              // <TouchableOpacity
+              //   key={i}
+              //   style={[styles.tabItem, isActive ? styles.tabItemActive : null]}
+              //   onPress={() => setIndex(i)}
+              // >
+              //   <Animated.Text
+              //     style={{
+              //       ...styles.textStyle,
+              //       color: isActive ? "red" : "blue",
+              //     }}
+              //   >
+              //     {route.title}
+              //   </Animated.Text>
+              // </TouchableOpacity>
+              <Button
+                key={route.key}
+                variant={"unstyled"}
+                colorScheme={"coolGray"}
+                bgColor={isActive ? theme.PRIMARY : theme.ACCENT}
+                size="xs"
+                mr="4"
+                display={"flex"}
+                flexDirection={"row"}
+                alignItems={"flex-start"}
+                _text={{
+                  color: isActive ? theme.FOREGROUND : theme.ACCENT_FOREGROUND,
+                  fontSize: "xs",
+                  fontWeight: "normal",
+                  textAlign: "center",
+                }}
+                rounded={10}
+                minW={"20"}
+                onPress={() => _props.jumpTo(route.key)}
+              >
+                {route.title}
+              </Button>
+            );
+          })}
+        </View>
       </View>
     );
   };
   return (
-    <View>
+    <MainContent>
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}
@@ -126,11 +110,12 @@ const Schedule = (props: NavigationProps) => {
         initialLayout={{ width: Dimensions.get("window").width }}
       />
       <FabButton
+        bottom={5}
         icon={
           <Iconify
             icon="solar:add-circle-outline"
             size={24}
-            color={theme.ACCENT}
+            color={theme.FOREGROUND}
             strokeWidth={20}
           />
         }
@@ -141,7 +126,7 @@ const Schedule = (props: NavigationProps) => {
           })
         }
       />
-    </View>
+    </MainContent>
   );
 };
 

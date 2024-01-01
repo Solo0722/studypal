@@ -18,7 +18,7 @@ const FolderCard = (props) => {
         color:
           activeFolder === index ? theme.FOREGROUND : theme.ACCENT_FOREGROUND,
         fontSize: "xs",
-        fontWeight: "bold",
+        fontWeight: "normal",
         textAlign: "center",
       }}
       rounded={10}

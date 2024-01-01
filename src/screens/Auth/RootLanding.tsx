@@ -23,7 +23,7 @@ const RootLanding = (props: NavigationProps) => {
   return (
     <Center flex={"1"} h="full" w="full">
       <Loader />
-      <Button onPress={() => props.navigation.navigate(AppPages.TAB)}>
+      <Button onPress={() => props.navigation.navigate(AppPages.ONBOARD)}>
         Go to tab
       </Button>
     </Center>

@@ -1,19 +1,17 @@
-import React, { useState } from "react";
-import { HStack, IconButton } from "native-base";
-import { Iconify } from "react-native-iconify";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
-import { NavigationProps } from "../../shared/types";
-import { theme } from "../../shared/theme";
-import { CONSTANTS } from "../../shared/constants";
+import React from "react";
 import MainContent from "../../components/MainContent";
+import { NavigationProps } from "../../shared/types";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { CONSTANTS } from "../../shared/constants";
+import { theme } from "../../shared/theme";
+import { Iconify } from "react-native-iconify";
+import { HStack, IconButton, Text } from "native-base";
 import RichTextEditor from "./RichTextEditor";
 
-const CreateEditNote = (props: NavigationProps) => {
+const Note = (props: NavigationProps) => {
   const { params } = useRoute();
-  const [noteContent, setNoteContent] = useState(params?.note.content);
 
   console.log(params);
-  console.log(noteContent);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -32,7 +30,12 @@ const CreateEditNote = (props: NavigationProps) => {
               variant={"ghost"}
               colorScheme={"coolGray"}
               rounded={"full"}
-              //  onPress={() => props.navigation.navigate(AppPages.NOTE)}
+              onPress={() =>
+                props.navigation.navigate(CONSTANTS.AppPages.CREATEEDITNOTE, {
+                  note: params?.note,
+                  isEdit: true,
+                })
+              }
             />
             <IconButton
               icon={
@@ -51,7 +54,7 @@ const CreateEditNote = (props: NavigationProps) => {
           </HStack>
         ),
         headerRightContainerStyle: CONSTANTS.CommonStyles.headerRightStyle,
-        headerTitle: params?.isEdit ? params?.note.title : "Note Title",
+        headerTitle: params?.note.title || "Note Title",
       });
 
       return () => {
@@ -66,12 +69,10 @@ const CreateEditNote = (props: NavigationProps) => {
 
   return (
     <MainContent>
-      <RichTextEditor
-        noteContent={noteContent}
-        setNoteContent={setNoteContent}
-      />
+      {/* <RichTextEditor /> */}
+      <Text>{params?.note.content}</Text>
     </MainContent>
   );
 };
 
-export default CreateEditNote;
+export default Note;

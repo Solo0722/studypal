@@ -17,6 +17,13 @@ export const CONSTANTS = {
     COURSE: "Course",
     NOTES: "Notes",
     NOTE: "Note",
+    CREATEEDITNOTE: "CreateEditNote",
     AUTH: "Auth",
+    ONBOARD: "Onboard",
+  },
+  CommonStyles: {
+    headerRightStyle: {
+      marginRight: 10,
+    },
   },
 };
