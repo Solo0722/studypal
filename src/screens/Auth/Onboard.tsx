@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavigationProps } from "../../shared/types";
-import { Button, Center, Image, Text, VStack, View } from "native-base";
+import {
+  Button,
+  Center,
+  Image,
+  Text,
+  VStack,
+  View,
+  useToast,
+} from "native-base";
 import { ImageBackground } from "react-native";
-import Logo from "../../assets/images/logo.svg";
 import { useStatusBar } from "../../hooks/useStatusBar";
 import { useNavigationBar } from "../../hooks/useNavigationBar";
 import { theme } from "../../shared/theme";
@@ -10,10 +17,32 @@ import App from "../../../App";
 import { CONSTANTS } from "../../shared/constants";
 import { LinearGradient } from "expo-linear-gradient";
 import { Iconify } from "react-native-iconify";
+import { signinWithGoogle } from "../../services/authService";
+import { saveToAsyncStorage } from "../../services/storageService";
+import LogoView from "./LogoView";
 
 const Onboard = ({ navigation }: NavigationProps) => {
   useStatusBar(true);
   useNavigationBar();
+  const toast = useToast();
+  const [loading, setLoading] = useState(false);
+
+  const handleGoogleSignin = async () => {
+    const response = await signinWithGoogle();
+
+    if (response.error) {
+      toast.show({
+        description: response.error.errorMessage,
+        colorScheme: "error",
+        bgColor: "error.500",
+      });
+      setLoading(false);
+      return;
+    }
+    await saveToAsyncStorage(CONSTANTS.STORAGE_KEYS.USER, response.user);
+    setLoading(false);
+    navigation.navigate(CONSTANTS.AppPages.TAB);
+  };
 
   return (
     <View w="full" h="full" flex={1}>
@@ -41,17 +70,7 @@ const Onboard = ({ navigation }: NavigationProps) => {
             justifyContent={"flex-end"}
           >
             <VStack space="10" alignItems={"center"} w="full">
-              <VStack space="2" alignItems={"center"} mt="20" w="full">
-                <Logo width={120} height={120} />
-                <Text
-                  fontWeight={"normal"}
-                  textAlign={"center"}
-                  color={theme.FOREGROUND}
-                  fontSize={10}
-                >
-                  Your Learning Journey, Your StudyPal!
-                </Text>
-              </VStack>
+              <LogoView />
               <VStack space="4" alignItems={"center"} w="full">
                 <Button
                   rounded={"full"}
@@ -70,6 +89,7 @@ const Onboard = ({ navigation }: NavigationProps) => {
                   Contine with Apple
                 </Button>
                 <Button
+                  isLoading={loading}
                   rounded={"full"}
                   variant="outline"
                   w="full"
@@ -86,7 +106,7 @@ const Onboard = ({ navigation }: NavigationProps) => {
                       strokeWidth={20}
                     />
                   }
-                  onPress={() => navigation.navigate(CONSTANTS.AppPages.TAB)}
+                  onPress={handleGoogleSignin}
                 >
                   Continue with Google
                 </Button>
@@ -109,7 +129,7 @@ const Onboard = ({ navigation }: NavigationProps) => {
                       strokeWidth={20}
                     />
                   }
-                  onPress={() => navigation.navigate(CONSTANTS.AppPages.TAB)}
+                  onPress={() => navigation.navigate(CONSTANTS.AppPages.LOGIN)}
                 >
                   Continue with Email
                 </Button>

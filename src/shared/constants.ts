@@ -21,9 +21,17 @@ export const CONSTANTS = {
     AUTH: "Auth",
     ONBOARD: "Onboard",
   },
+  STORAGE_KEYS: {
+    USER: "studypal_user",
+  },
   CommonStyles: {
     headerRightStyle: {
       marginRight: 10,
     },
+  },
+  ACTION_TYPES: {
+    LOGOUT_USER: "LOGOUT_USER",
+    SET_USER: "SET_USER",
+    EDIT_USER: "EDIT_USER",
   },
 };

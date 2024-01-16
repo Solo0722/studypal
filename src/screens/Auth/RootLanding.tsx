@@ -1,33 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { CONSTANTS } from "../../shared/constants";
 import { Button, Center } from "native-base";
 import Loader from "../../components/Loader";
 import { NavigationProps } from "../../shared/types";
+import { GlobalContext } from "../../store/context";
+import { readFromAsyncStorage } from "../../services/storageService";
 
 const RootLanding = (props: NavigationProps) => {
-  const isUserLoggedIn = true;
-  const { AppPages } = CONSTANTS;
-  const redirectUser = () => {
-    if (isUserLoggedIn) {
-      console.log("User is logged in");
+  const { AppPages, STORAGE_KEYS } = CONSTANTS;
+  const { updateUserData } = useContext(GlobalContext);
+
+  const redirectUser = async () => {
+    const data = await readFromAsyncStorage(STORAGE_KEYS.USER);
+
+    if (data) {
+      updateUserData(data);
       props.navigation.navigate(AppPages.TAB);
-    } else {
-      console.log("User is not logged in");
-      props.navigation.navigate(AppPages.SIGNUP);
     }
+    props.navigation.navigate(AppPages.ONBOARD);
   };
   useEffect(() => {
     redirectUser();
   }, []);
 
-  return (
-    <Center flex={"1"} h="full" w="full">
-      <Loader />
-      <Button onPress={() => props.navigation.navigate(AppPages.ONBOARD)}>
-        Go to tab
-      </Button>
-    </Center>
-  );
+  return null;
 };
 
 export default RootLanding;
