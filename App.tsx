@@ -9,6 +9,7 @@ import { nativebaseTheme, theme } from "./src/shared/theme";
 import RootNavigator from "./src/navigators/RootNavigator";
 import { useStatusBar } from "./src/hooks/useStatusBar";
 import { useNavigationBar } from "./src/hooks/useNavigationBar";
+import { ClerkProvider } from "@clerk/clerk-expo";
 
 export default function App() {
   useStatusBar();
@@ -67,9 +68,15 @@ export default function App() {
         },
       }}
     >
-      <NativeBaseProvider theme={nativebaseTheme}>
-        <RootNavigator />
-      </NativeBaseProvider>
+      <ClerkProvider
+        publishableKey={
+          "pk_test_ZmVhc2libGUtYmx1ZWJpcmQtNTkuY2xlcmsuYWNjb3VudHMuZGV2JA"
+        }
+      >
+        <NativeBaseProvider theme={nativebaseTheme}>
+          <RootNavigator />
+        </NativeBaseProvider>
+      </ClerkProvider>
     </NavigationContainer>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { HStack, IconButton } from "native-base";
+import { HStack, IconButton, Input } from "native-base";
 import { Iconify } from "react-native-iconify";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { NavigationProps } from "../../shared/types";
@@ -10,10 +10,11 @@ import RichTextEditor from "./RichTextEditor";
 
 const CreateEditNote = (props: NavigationProps) => {
   const { params } = useRoute();
-  const [noteContent, setNoteContent] = useState(params?.note.content);
+  const [noteContent, setNoteContent] = useState(
+    params?.isEdit ? params?.note.content : ""
+  );
 
-  console.log(params);
-  console.log(noteContent);
+  const renderNoteTitleInput = () => <Input placeholder="Note Title" />;
 
   useFocusEffect(
     React.useCallback(() => {
@@ -54,13 +55,13 @@ const CreateEditNote = (props: NavigationProps) => {
         headerTitle: params?.isEdit ? params?.note.title : "Note Title",
       });
 
-      return () => {
-        props.navigation.setOptions({
-          headerRight: undefined,
-          headerTitle: undefined,
-          headerRightContainerStyle: undefined,
-        });
-      };
+      // return () => {
+      //   props.navigation.setOptions({
+      //     headerRight: undefined,
+      //     headerTitle: undefined,
+      //     headerRightContainerStyle: undefined,
+      //   });
+      // };
     }, [])
   );
 

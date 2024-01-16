@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import React, { useState } from "react";
-import { IconButton, View } from "native-base";
+import { Button, IconButton, View } from "native-base";
 import NoteCard from "./NoteCard";
 import FabButton from "../../components/FabButton";
 import { Iconify } from "react-native-iconify";
@@ -57,6 +57,34 @@ const Notes = (props: NavigationProps) => {
               setActiveFolder={setActiveFolder}
               index={index}
             />
+          )}
+          ListHeaderComponent={() => (
+            <Button
+              variant={"unstyled"}
+              colorScheme={"coolGray"}
+              bgColor={theme.ACCENT}
+              size="xs"
+              display={"flex"}
+              flexDirection={"row"}
+              alignItems={"flex-start"}
+              _text={{
+                color: theme.ACCENT_FOREGROUND,
+                fontSize: "xs",
+                fontWeight: "normal",
+                textAlign: "center",
+              }}
+              rounded={10}
+              // minW={"20"}
+              mr={"2"}
+              startIcon={
+                <Iconify
+                  icon="solar:add-circle-outline"
+                  size={20}
+                  color={theme.FOREGROUND}
+                  strokeWidth={20}
+                />
+              }
+            ></Button>
           )}
           ItemSeparatorComponent={() => <View mx="2" />}
           showsHorizontalScrollIndicator={false}

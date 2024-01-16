@@ -23,12 +23,12 @@ const Schedule = (props: NavigationProps) => {
       title: "Classes",
     },
     {
-      key: "exams",
-      title: "Exams",
+      key: "tasks",
+      title: "Tasks & Assignments",
     },
     {
-      key: "tasks",
-      title: "Tasks",
+      key: "exams",
+      title: "Exams",
     },
   ]);
 

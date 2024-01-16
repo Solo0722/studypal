@@ -11,6 +11,7 @@ import AgendaItem from "./AgendaItem";
 import { getTheme, themeColor } from "./helpers/theme";
 import testIDs from "./helpers/testIDs";
 import { theme } from "../../shared/theme";
+import ClassCard from "../Classes/ClassCard";
 
 const ITEMS: any[] = agendaItems;
 
@@ -35,7 +36,7 @@ const AgendaCalendar = (props: Props) => {
   // }, []);
 
   const renderItem = useCallback(({ item }: any) => {
-    return <AgendaItem item={item} />;
+    return <ClassCard orientation="" />;
   }, []);
 
   return (
