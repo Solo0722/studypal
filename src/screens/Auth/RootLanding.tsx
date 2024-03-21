@@ -14,10 +14,12 @@ const RootLanding = (props: NavigationProps) => {
     const data = await readFromAsyncStorage(STORAGE_KEYS.USER);
 
     if (data) {
+      console.log(data);
       updateUserData(data);
-      props.navigation.navigate(AppPages.TAB);
+      props.navigation.navigate(AppPages.HOME);
+    } else {
+      props.navigation.navigate(AppPages.ONBOARD);
     }
-    props.navigation.navigate(AppPages.ONBOARD);
   };
   useEffect(() => {
     redirectUser();

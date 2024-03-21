@@ -45,7 +45,7 @@ const RichTextEditor = (props: Props) => {
               placeholder="Enter Notes here..."
               onChange={(descriptionText) => {
                 console.log("descriptionText:", descriptionText);
-                // props.setNoteContent(descriptionText);
+                props.setNoteContent(descriptionText);
               }}
               initialHeight={400}
               initialContentHTML={props.noteContent}

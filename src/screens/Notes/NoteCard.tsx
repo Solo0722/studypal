@@ -16,27 +16,20 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { theme } from "../../shared/theme";
 import { CONSTANTS } from "../../shared/constants";
 import { getRandomColor, truncateString } from "../../services/uiService";
+import { Note } from "../../shared/types";
 
 type Props = {
   orientation: "horizontal" | "vertical";
-  index: number;
+  item: Note;
 };
 
-const NoteCard = ({ orientation, index }: Props) => {
+const NoteCard = ({ orientation, item }: Props) => {
   const { navigate } = useNavigation<NavigationProp<any>>();
+  console.log(item);
 
   return (
     <TouchableOpacity
-      onPress={() =>
-        navigate(CONSTANTS.AppPages.NOTE, {
-          note: {
-            noteId: index,
-            title: "Hello world",
-            content:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-          },
-        })
-      }
+      onPress={() => navigate(CONSTANTS.AppPages.NOTE, { noteId: item.id })}
     >
       <Box
         // minH={"250"}
@@ -72,7 +65,7 @@ const NoteCard = ({ orientation, index }: Props) => {
               />
               <VStack space={1}>
                 <Heading fontSize={"sm"} fontWeight={"bold"}>
-                  Note Title
+                  {item.title}
                 </Heading>
                 <Text
                   fontSize={9}
@@ -108,10 +101,7 @@ const NoteCard = ({ orientation, index }: Props) => {
             fontWeight={"normal"}
             lineHeight={22}
           >
-            {truncateString(
-              " Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-              200
-            )}
+            {truncateString(item.content, 200)}
           </Text>
         </VStack>
       </Box>

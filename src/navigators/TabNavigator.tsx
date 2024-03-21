@@ -160,7 +160,7 @@ const TabNavigator = () => {
               headerTitleStyle: {
                 color: `${theme.FOREGROUND_2}`,
                 fontWeight: "800",
-                fontFamily: "Poppins-bold",
+                fontFamily: "Urbanist-bold",
               },
             }}
           />

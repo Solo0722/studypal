@@ -34,11 +34,7 @@ const ListBuilder = (props: Props) => {
   return (
     <VStack space="2">
       {props.showListTitle && (
-        <Text
-          fontSize={10}
-          fontWeight={"semibold"}
-          color={theme.ACCENT_FOREGROUND}
-        >
+        <Text fontSize={10} fontWeight={"semibold"} color={theme.FOREGROUND}>
           {props.listTitle}
         </Text>
       )}

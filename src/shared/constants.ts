@@ -5,6 +5,7 @@ export const CONSTANTS = {
     HOME: "Home",
     PROFILE: "Profile",
     CALENDAR: "Calendar",
+    CLASSES: "Classes",
     SETTINGS: "Settings",
     LOGIN: "Login",
     SIGNUP: "Signup",
@@ -18,11 +19,13 @@ export const CONSTANTS = {
     NOTES: "Notes",
     NOTE: "Note",
     CREATEEDITNOTE: "CreateEditNote",
+    CREATECLASS:'CreateClass',
     AUTH: "Auth",
     ONBOARD: "Onboard",
   },
   STORAGE_KEYS: {
     USER: "studypal_user",
+    NOTES: "studypal_notes",
   },
   CommonStyles: {
     headerRightStyle: {
@@ -33,5 +36,9 @@ export const CONSTANTS = {
     LOGOUT_USER: "LOGOUT_USER",
     SET_USER: "SET_USER",
     EDIT_USER: "EDIT_USER",
+    CREATE_NOTE: "CREATE_NOTE",
+    SET_NOTES: "SET_NOTES",
+    UPDATE_NOTE: "UPDATE_NOTE",
+    DELETE_NOTE: "DELETE_NOTE",
   },
 };

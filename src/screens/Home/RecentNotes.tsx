@@ -1,16 +1,23 @@
 import { StyleSheet } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { FlatList, Heading, Text, VStack, View } from "native-base";
 import NoteCard from "../Notes/NoteCard";
 import { theme } from "../../shared/theme";
 import ListBuilder from "../../components/ListBuilder";
+import { GlobalContext } from "../../store/context";
+import Empty from "../../components/Empty";
+import isEmpty from "lodash";
 
 const RecentNotes = () => {
+  const { notesState } = useContext(GlobalContext);
+
+  if (isEmpty(notesState)) return <Empty />;
+
   return (
     <ListBuilder
-      data={[...new Array(2)]}
-      renderItem={({ index }) => (
-        <NoteCard orientation={"vertical"} index={index} />
+      data={notesState.slice(0, 2)}
+      renderItem={({ item }) => (
+        <NoteCard orientation={"vertical"} item={item} />
       )}
       ItemSeparatorComponent={() => <View my="2" />}
       showsHorizontalScrollIndicator={false}

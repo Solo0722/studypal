@@ -1,4 +1,4 @@
-import { TouchableOpacity } from "react-native";
+import { Pressable, TouchableOpacity } from "react-native";
 import React from "react";
 import {
   Box,
@@ -26,23 +26,14 @@ const ClassCard = ({ orientation, index }: Props) => {
   const { navigate } = useNavigation<NavigationProp<any>>();
 
   return (
-    <TouchableOpacity
-      onPress={() =>
-        navigate(CONSTANTS.AppPages.NOTE, {
-          noteId: index,
-          title: "Hello world",
-          content:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-        })
-      }
-    >
+    <Pressable>
       <Box
         // minH={"250"}
         // maxH={"300"}
         w={orientation === "horizontal" ? "360" : "full"}
         p="3"
         borderRadius={10}
-        bgColor={theme.ACCENT}
+        bgColor={theme.ACCENT_TERTIARY}
       >
         <View
           w="full"
@@ -68,7 +59,11 @@ const ClassCard = ({ orientation, index }: Props) => {
               }
             />
             <VStack space={1}>
-              <Heading fontSize={"sm"} fontWeight={"bold"}>
+              <Heading
+                fontSize={"sm"}
+                fontWeight={"bold"}
+                color={theme.BACKGROUND}
+              >
                 Computer Organisation
               </Heading>
               <Text
@@ -108,7 +103,7 @@ const ClassCard = ({ orientation, index }: Props) => {
           </Text>
         </View>
       </Box>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

@@ -10,7 +10,7 @@ import { theme } from "../../shared/theme";
 import { CONSTANTS } from "../../shared/constants";
 import UpcomingClasses from "./UpcomingClasses";
 
-const { CommonStyles } = CONSTANTS;
+const { CommonStyles, AppPages } = CONSTANTS;
 
 const Home = (props: NavigationProps) => {
   useFocusEffect(
@@ -22,8 +22,9 @@ const Home = (props: NavigationProps) => {
               <Iconify
                 icon="solar:bell-outline"
                 size={18}
-                color={theme.FOREGROUND}
+                color={theme.BACKGROUND}
                 strokeWidth={20}
+                onPress={() => props.navigation.navigate(AppPages.LOGIN)}
               />
             }
             variant={"ghost"}

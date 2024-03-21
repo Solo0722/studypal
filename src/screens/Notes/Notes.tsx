@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, IconButton, View } from "native-base";
 import NoteCard from "./NoteCard";
 import FabButton from "../../components/FabButton";
@@ -10,6 +10,9 @@ import { theme } from "../../shared/theme";
 import { NavigationProps } from "../../shared/types";
 import { useFocusEffect } from "@react-navigation/native";
 import ListBuilder from "../../components/ListBuilder";
+import { GlobalContext } from "../../store/context";
+import isEmpty from "lodash/isEmpty";
+import Empty from "../../components/Empty";
 
 const { AppPages, CommonStyles } = CONSTANTS;
 
@@ -25,14 +28,14 @@ const Notes = (props: NavigationProps) => {
               <Iconify
                 icon="solar:magnifer-outline"
                 size={18}
-                color={theme.FOREGROUND}
+                color={theme.BACKGROUND}
                 strokeWidth={20}
               />
             }
             variant={"ghost"}
             colorScheme={"coolGray"}
             rounded={"full"}
-            onPress={() => props.navigation.navigate(AppPages.NOTE)}
+            // onPress={() => props.navigation.navigate(AppPages.NOTE)}
           />
         ),
         headerRightContainerStyle: CommonStyles.headerRightStyle,
@@ -46,61 +49,73 @@ const Notes = (props: NavigationProps) => {
     }, [])
   );
 
-  return (
-    <View>
-      <View w="full" flexDir={"row"} bgColor={theme.BACKGROUND} px="2" py="4">
+  const { notesState } = useContext(GlobalContext);
+
+  const renderContent = () => {
+    if (isEmpty(notesState)) return <Empty />;
+    return (
+      <>
+        <View w="full" flexDir={"row"} bgColor={theme.BACKGROUND} px="2" py="4">
+          <ListBuilder
+            data={[...new Array(5)]}
+            renderItem={({ index }) => (
+              <FolderCard
+                activeFolder={activeFolder}
+                setActiveFolder={setActiveFolder}
+                index={index}
+              />
+            )}
+            ListHeaderComponent={() => (
+              <Button
+                variant={"unstyled"}
+                colorScheme={"coolGray"}
+                bgColor={theme.ACCENT}
+                size="xs"
+                display={"flex"}
+                flexDirection={"row"}
+                alignItems={"flex-start"}
+                _text={{
+                  color: theme.ACCENT_FOREGROUND,
+                  fontSize: "xs",
+                  fontWeight: "normal",
+                  textAlign: "center",
+                }}
+                rounded={10}
+                // minW={"20"}
+                mr={"2"}
+                startIcon={
+                  <Iconify
+                    icon="solar:add-circle-outline"
+                    size={20}
+                    color={theme.FOREGROUND}
+                    strokeWidth={20}
+                  />
+                }
+              ></Button>
+            )}
+            ItemSeparatorComponent={() => <View mx="2" />}
+            showsHorizontalScrollIndicator={false}
+            horizontal
+          />
+        </View>
         <ListBuilder
-          data={[...new Array(5)]}
-          renderItem={({ index }) => (
-            <FolderCard
-              activeFolder={activeFolder}
-              setActiveFolder={setActiveFolder}
-              index={index}
-            />
+          data={notesState}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <NoteCard orientation={"vertical"} item={item} />
           )}
-          ListHeaderComponent={() => (
-            <Button
-              variant={"unstyled"}
-              colorScheme={"coolGray"}
-              bgColor={theme.ACCENT}
-              size="xs"
-              display={"flex"}
-              flexDirection={"row"}
-              alignItems={"flex-start"}
-              _text={{
-                color: theme.ACCENT_FOREGROUND,
-                fontSize: "xs",
-                fontWeight: "normal",
-                textAlign: "center",
-              }}
-              rounded={10}
-              // minW={"20"}
-              mr={"2"}
-              startIcon={
-                <Iconify
-                  icon="solar:add-circle-outline"
-                  size={20}
-                  color={theme.FOREGROUND}
-                  strokeWidth={20}
-                />
-              }
-            ></Button>
-          )}
-          ItemSeparatorComponent={() => <View mx="2" />}
+          ItemSeparatorComponent={() => <View my="2" />}
           showsHorizontalScrollIndicator={false}
-          horizontal
+          contentContainerStyle={{ paddingBottom: 150 }}
+          px={2}
         />
-      </View>
-      <ListBuilder
-        data={[...new Array(5)]}
-        renderItem={({ index }) => (
-          <NoteCard orientation={"vertical"} index={index} />
-        )}
-        ItemSeparatorComponent={() => <View my="2" />}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 150 }}
-        px={2}
-      />
+      </>
+    );
+  };
+
+  return (
+    <View flex={1} h="full" w="full">
+      {renderContent()}
       <FabButton
         icon={
           <Iconify

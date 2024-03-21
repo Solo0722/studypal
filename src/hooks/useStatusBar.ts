@@ -13,7 +13,7 @@ export const useStatusBar = (
         StatusBar.setTranslucent(true);
         StatusBar.setBackgroundColor("transparent", true);
       } else {
-        StatusBar.setBackgroundColor(backgroundColor || theme.ACCENT, true);
+        StatusBar.setBackgroundColor(backgroundColor || theme.PRIMARY, true);
       }
       StatusBar.setBarStyle(barStyle || "light-content");
     } else {

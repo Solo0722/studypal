@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import MainContent from "../../components/MainContent";
 import {
   View,
@@ -16,8 +16,18 @@ import { useFocusEffect } from "@react-navigation/native";
 import { NavigationProps } from "../../shared/types";
 import { Iconify } from "react-native-iconify";
 import { CONSTANTS } from "../../shared/constants";
+import { GlobalContext } from "../../store/context";
+import { saveToAsyncStorage } from "../../services/storageService";
 
 const Profile = (props: NavigationProps) => {
+  const { logoutUser } = useContext(GlobalContext);
+
+  const logUserOut = async () => {
+    logoutUser();
+    await saveToAsyncStorage(CONSTANTS.STORAGE_KEYS.USER, null);
+    props.navigation.navigate(CONSTANTS.AppPages.ONBOARD);
+  };
+
   useFocusEffect(
     React.useCallback(() => {
       props.navigation.setOptions({
@@ -27,14 +37,14 @@ const Profile = (props: NavigationProps) => {
               <Iconify
                 icon="solar:logout-3-outline"
                 size={18}
-                color={theme.FOREGROUND}
+                color={theme.BACKGROUND}
                 strokeWidth={20}
               />
             }
             variant={"ghost"}
             colorScheme={"coolGray"}
             rounded={"full"}
-            // onPress={() => props.navigation.navigate(AppPages.NOTE)}
+            onPress={logUserOut}
           />
         ),
         headerRightContainerStyle: CONSTANTS.CommonStyles.headerRightStyle,

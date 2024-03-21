@@ -1,17 +1,37 @@
-import React from "react";
+import React, { useContext } from "react";
 import MainContent from "../../components/MainContent";
 import { NavigationProps } from "../../shared/types";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
+import {
+  NavigationProp,
+  RouteProp,
+  useFocusEffect,
+} from "@react-navigation/native";
 import { CONSTANTS } from "../../shared/constants";
 import { theme } from "../../shared/theme";
 import { Iconify } from "react-native-iconify";
 import { HStack, IconButton, Text } from "native-base";
 import RichTextEditor from "./RichTextEditor";
+import { GlobalContext } from "../../store/context";
 
-const Note = (props: NavigationProps) => {
-  const { params } = useRoute();
+type Props = {
+  navigation: NavigationProp<any>;
+  route: RouteProp<{
+    params: {
+      noteId: number;
+    };
+  }>;
+};
 
-  console.log(params);
+const Note = (props: Props) => {
+  console.log(props.route.params);
+
+  const { notesState } = useContext(GlobalContext);
+
+  const getNote = (id: string | number) => {
+    return notesState.find((note) => note.id.toString() === id.toString());
+  };
+
+  const note = getNote(props.route.params.noteId);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -32,7 +52,7 @@ const Note = (props: NavigationProps) => {
               rounded={"full"}
               onPress={() =>
                 props.navigation.navigate(CONSTANTS.AppPages.CREATEEDITNOTE, {
-                  note: params?.note,
+                  noteId: note.id,
                   isEdit: true,
                 })
               }
@@ -54,7 +74,7 @@ const Note = (props: NavigationProps) => {
           </HStack>
         ),
         headerRightContainerStyle: CONSTANTS.CommonStyles.headerRightStyle,
-        headerTitle: params?.note.title || "Note Title",
+        headerTitle: note.title || "Note Title",
       });
 
       return () => {
@@ -70,7 +90,7 @@ const Note = (props: NavigationProps) => {
   return (
     <MainContent>
       {/* <RichTextEditor /> */}
-      <Text>{params?.note.content}</Text>
+      <Text>{note.content}</Text>
     </MainContent>
   );
 };

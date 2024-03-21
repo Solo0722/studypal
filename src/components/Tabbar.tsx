@@ -75,7 +75,7 @@ const Tabbar = ({ state, descriptors, navigation }) => {
               <Heading
                 fontSize={"10"}
                 color={isFocused ? `${theme.PRIMARY}` : `${theme.FOREGROUND}`}
-                fontFamily={"Poppins-regular"}
+                fontFamily={"Urbanist-regular"}
               >
                 {label}
               </Heading>

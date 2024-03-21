@@ -16,18 +16,18 @@ export function getTheme(): Theme {
     // month
     monthTextColor: theme.FOREGROUND,
     textMonthFontSize: 16,
-    textMonthFontFamily: "Poppins-regular",
+    textMonthFontFamily: "Urbanist-regular",
     textMonthFontWeight: "bold" as const,
     // day names
     textSectionTitleColor: theme.FOREGROUND,
     textDayHeaderFontSize: 12,
-    textDayHeaderFontFamily: "Poppins-regular",
+    textDayHeaderFontFamily: "Urbanist-regular",
     textDayHeaderFontWeight: "normal" as const,
     // dates
     dayTextColor: theme.FOREGROUND_2,
     todayTextColor: themeColor,
     textDayFontSize: 10,
-    textDayFontFamily: "Poppins-regular",
+    textDayFontFamily: "Urbanist-regular",
     textDayFontWeight: "500" as const,
     textDayStyle: { marginTop: Platform.OS === "android" ? 2 : 4 },
     // selected date

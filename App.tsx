@@ -15,20 +15,20 @@ export default function App() {
   useStatusBar();
   useNavigationBar();
   const [fontsLoaded, error] = useFonts({
-    "Poppins-extraLight": require("./src/assets/fonts/Poppins/Poppins-ExtraLight.ttf"),
-    "Poppins-extraLight-italic": require("./src/assets/fonts/Poppins/Poppins-ExtraLightItalic.ttf"),
-    "Poppins-light": require("./src/assets/fonts/Poppins/Poppins-Light.ttf"),
-    "Poppins-light-italic": require("./src/assets/fonts/Poppins/Poppins-LightItalic.ttf"),
-    "Poppins-regular": require("./src/assets/fonts/Poppins/Poppins-Regular.ttf"),
-    "Poppins-regular-italic": require("./src/assets/fonts/Poppins/Poppins-Italic.ttf"),
-    "Poppins-medium": require("./src/assets/fonts/Poppins/Poppins-Medium.ttf"),
-    "Poppins-medium-italic": require("./src/assets/fonts/Poppins/Poppins-MediumItalic.ttf"),
-    "Poppins-semibold": require("./src/assets/fonts/Poppins/Poppins-SemiBold.ttf"),
-    "Poppins-semibold-italic": require("./src/assets/fonts/Poppins/Poppins-SemiBoldItalic.ttf"),
-    "Poppins-bold": require("./src/assets/fonts/Poppins/Poppins-Bold.ttf"),
-    "Poppins-bold-italic": require("./src/assets/fonts/Poppins/Poppins-BoldItalic.ttf"),
-    "Poppins-extrabold": require("./src/assets/fonts/Poppins/Poppins-ExtraBold.ttf"),
-    "Poppins-extrabold-italic": require("./src/assets/fonts/Poppins/Poppins-ExtraBoldItalic.ttf"),
+    "Urbanist-extraLight": require("./src/assets/fonts/Urbanist/Urbanist-ExtraLight.ttf"),
+    "Urbanist-extraLight-italic": require("./src/assets/fonts/Urbanist/Urbanist-ExtraLightItalic.ttf"),
+    "Urbanist-light": require("./src/assets/fonts/Urbanist/Urbanist-Light.ttf"),
+    "Urbanist-light-italic": require("./src/assets/fonts/Urbanist/Urbanist-LightItalic.ttf"),
+    "Urbanist-regular": require("./src/assets/fonts/Urbanist/Urbanist-Regular.ttf"),
+    "Urbanist-regular-italic": require("./src/assets/fonts/Urbanist/Urbanist-Italic.ttf"),
+    "Urbanist-medium": require("./src/assets/fonts/Urbanist/Urbanist-Medium.ttf"),
+    "Urbanist-medium-italic": require("./src/assets/fonts/Urbanist/Urbanist-MediumItalic.ttf"),
+    "Urbanist-semibold": require("./src/assets/fonts/Urbanist/Urbanist-SemiBold.ttf"),
+    "Urbanist-semibold-italic": require("./src/assets/fonts/Urbanist/Urbanist-SemiBoldItalic.ttf"),
+    "Urbanist-bold": require("./src/assets/fonts/Urbanist/Urbanist-Bold.ttf"),
+    "Urbanist-bold-italic": require("./src/assets/fonts/Urbanist/Urbanist-BoldItalic.ttf"),
+    "Urbanist-extrabold": require("./src/assets/fonts/Urbanist/Urbanist-ExtraBold.ttf"),
+    "Urbanist-extrabold-italic": require("./src/assets/fonts/Urbanist/Urbanist-ExtraBoldItalic.ttf"),
   });
 
   useEffect(() => {
@@ -47,17 +47,17 @@ export default function App() {
 
   setCustomText({
     style: {
-      fontFamily: "Poppins-regular",
+      fontFamily: "Urbanist-regular",
       color: `${theme.FOREGROUND}`,
     },
   });
 
-  setCustomTextInput({ style: { fontFamily: "Poppins-regular" } });
+  setCustomTextInput({ style: { fontFamily: "Urbanist-regular" } });
 
   return (
     <NavigationContainer
       theme={{
-        dark: true,
+        dark: false,
         colors: {
           background: theme.BACKGROUND,
           text: theme.FOREGROUND,

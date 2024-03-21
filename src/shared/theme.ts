@@ -1,67 +1,67 @@
 import { extendTheme } from "native-base";
 
 export const theme = {
-  PRIMARY: "#26a59a",
+  PRIMARY: "#1a2238",
   SECONDARY: "#ef5250",
-  BACKGROUND: "#0F0F13",
-  FOREGROUND: "#FAFAFA",
-  FOREGROUND_2: "#D0D0D0",
-  ACCENT_FOREGROUND: "#878787",
-  ACCENT: "#151419",
+  BACKGROUND: "#f8f8ff",
+  FOREGROUND: "#0a0c13",
+  FOREGROUND_2: "#333333",
+  ACCENT_FOREGROUND: "#dbdce0",
+  ACCENT: "#55596c",
   ACCENT_SECONDARY: "#131317",
-  ACCENT_TERTIARY: "#2D2D2F",
+  ACCENT_TERTIARY: "#4D5265",
   MUTED: "#39393B",
   BORDER: "hsl(240 3.7% 15.9%)",
 };
 
 export const nativebaseTheme = extendTheme({
   config: {
-    initialColorMode: "dark",
+    initialColorMode: "light",
     useSystemColorMode: false,
   },
   fontConfig: {
-    Poppins: {
+    Urbanist: {
       100: {
-        normal: "Poppins-light",
-        italic: "Poppins-light",
+        normal: "Urbanist-light",
+        italic: "Urbanist-light",
       },
       200: {
-        normal: "Poppins-light",
-        italic: "Poppins-light",
+        normal: "Urbanist-light",
+        italic: "Urbanist-light",
       },
       300: {
-        normal: "Poppins-light",
-        italic: "Poppins-light",
+        normal: "Urbanist-light",
+        italic: "Urbanist-light",
       },
       400: {
-        normal: "Poppins-regular",
-        italic: "Poppins-regular",
+        normal: "Urbanist-regular",
+        italic: "Urbanist-regular",
       },
       500: {
-        normal: "Poppins-regular",
-        italic: "Poppins-regular",
+        normal: "Urbanist-regular",
+        italic: "Urbanist-regular",
       },
       600: {
-        normal: "Poppins-medium",
-        italic: "Poppins-medium",
+        normal: "Urbanist-medium",
+        italic: "Urbanist-medium",
       },
       700: {
-        normal: "Poppins-semibold",
-        italic: "Poppins-semibold",
+        normal: "Urbanist-semibold",
+        italic: "Urbanist-semibold",
       },
       800: {
-        normal: "Poppins-bold",
-        italic: "Poppins-bold",
+        normal: "Urbanist-bold",
+        italic: "Urbanist-bold",
       },
       900: {
-        normal: "Poppins-extrabold",
-        italic: "Poppins-extrabold",
+        normal: "Urbanist-extrabold",
+        italic: "Urbanist-extrabold",
       },
     },
   },
   fonts: {
-    heading: "Poppins",
-    body: "Poppins",
-    mono: "Poppins",
+    heading: "Urbanist",
+    body: "Urbanist",
+    mono: "Urbanist",
   },
 });
