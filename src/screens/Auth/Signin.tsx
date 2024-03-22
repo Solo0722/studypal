@@ -75,7 +75,7 @@ const Signin = ({ navigation }) => {
       }
       await saveToAsyncStorage(CONSTANTS.STORAGE_KEYS.USER, response.user);
       setLoading(false);
-      navigation.navigate(CONSTANTS.AppPages.HOME);
+      navigation.navigate(CONSTANTS.AppPages.SYNCPAGE);
     }
   };
 

@@ -1,8 +1,12 @@
 import React, { createContext, useMemo, useReducer } from "react";
-import { notesReducers, userReducer } from "./reducers";
-import { initialNotesState, initialUserState } from "./initialStates";
+import { classesReducers, notesReducers, userReducer } from "./reducers";
+import {
+  initialClassesState,
+  initialNotesState,
+  initialUserState,
+} from "./initialStates";
 import { CONSTANTS } from "../shared/constants";
-import { Note } from "../shared/types";
+import { ClassData, Note } from "../shared/types";
 type Props = {
   children: React.ReactNode;
 };
@@ -16,6 +20,11 @@ export const GlobalContext = createContext({
   createNote: (note: Note) => {},
   updateNote: (note: Note) => {},
   deleteNote: (note: Note) => {},
+  classesState: initialClassesState,
+  setClassesData: (classesData: ClassData[]) => {},
+  createClass: (classData: ClassData) => {},
+  updateClass: (classData: ClassData) => {},
+  deleteClass: (classData: ClassData) => {},
 });
 
 const {
@@ -25,6 +34,10 @@ const {
   CREATE_NOTE,
   UPDATE_NOTE,
   DELETE_NOTE,
+  CREATE_CLASS,
+  DELETE_CLASS,
+  UPDATE_CLASS,
+  SET_CLASSES,
 } = CONSTANTS.ACTION_TYPES;
 
 const GlobalProvider = (props: Props) => {
@@ -32,6 +45,10 @@ const GlobalProvider = (props: Props) => {
   const [notesState, dispatchNotes] = useReducer(
     notesReducers,
     initialNotesState
+  );
+  const [classesState, dispatchClasses] = useReducer(
+    classesReducers,
+    initialClassesState
   );
 
   const updateUserData = (user) => {
@@ -58,26 +75,56 @@ const GlobalProvider = (props: Props) => {
     dispatchNotes({ type: DELETE_NOTE, payload: note });
   };
 
+  const setClassesData = (classesData: ClassData[]) => {
+    dispatchClasses({ type: SET_CLASSES, payload: classesData });
+  };
+
+  const createClass = (classData: ClassData) => {
+    dispatchClasses({ type: CREATE_CLASS, payload: classData });
+  };
+
+  const updateClass = (classData: ClassData) => {
+    dispatchClasses({ type: UPDATE_CLASS, payload: classData });
+  };
+
+  const deleteClass = (classData: ClassData) => {
+    dispatchClasses({ type: DELETE_CLASS, payload: classData });
+  };
+
   const contextValue = useMemo(() => {
     return {
       userState,
-      notesState,
       updateUserData,
       logoutUser,
+
+      notesState,
       setNotesData,
       createNote,
       updateNote,
       deleteNote,
+
+      classesState,
+      setClassesData,
+      createClass,
+      updateClass,
+      deleteClass,
     };
   }, [
     userState,
     updateUserData,
     logoutUser,
+
     notesState,
     setNotesData,
     createNote,
     updateNote,
     deleteNote,
+
+    classesState,
+    setClassesData,
+    createClass,
+    updateClass,
+    deleteClass,
   ]);
 
   return (

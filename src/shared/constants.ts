@@ -1,7 +1,9 @@
 export const CONSTANTS = {
   AppPages: {
     ROOTLANDING: "RootLanding",
+    SYNCPAGE: "SyncPage",
     TAB: "Tab",
+    MAINPAGES: "MainPages",
     HOME: "Home",
     PROFILE: "Profile",
     CALENDAR: "Calendar",
@@ -19,13 +21,14 @@ export const CONSTANTS = {
     NOTES: "Notes",
     NOTE: "Note",
     CREATEEDITNOTE: "CreateEditNote",
-    CREATECLASS:'CreateClass',
+    CREATEEDITCLASS: "CreateEditClass",
     AUTH: "Auth",
     ONBOARD: "Onboard",
   },
   STORAGE_KEYS: {
     USER: "studypal_user",
     NOTES: "studypal_notes",
+    CLASSES: "studypal_classes",
   },
   CommonStyles: {
     headerRightStyle: {
@@ -36,9 +39,15 @@ export const CONSTANTS = {
     LOGOUT_USER: "LOGOUT_USER",
     SET_USER: "SET_USER",
     EDIT_USER: "EDIT_USER",
+
     CREATE_NOTE: "CREATE_NOTE",
     SET_NOTES: "SET_NOTES",
     UPDATE_NOTE: "UPDATE_NOTE",
     DELETE_NOTE: "DELETE_NOTE",
+
+    CREATE_CLASS: "CREATE_CLASS",
+    SET_CLASSES: "SET_CLASSES",
+    UPDATE_CLASS: "UPDATE_CLASS",
+    DELETE_CLASS: "DELETE_CLASS",
   },
 };

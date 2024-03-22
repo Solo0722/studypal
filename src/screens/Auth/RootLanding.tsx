@@ -16,7 +16,7 @@ const RootLanding = (props: NavigationProps) => {
     if (data) {
       console.log(data);
       updateUserData(data);
-      props.navigation.navigate(AppPages.HOME);
+      props.navigation.navigate(AppPages.SYNCPAGE);
     } else {
       props.navigation.navigate(AppPages.ONBOARD);
     }

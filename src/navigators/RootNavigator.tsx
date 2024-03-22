@@ -24,6 +24,8 @@ import { enableScreens } from "react-native-screens";
 import Profile from "../screens/Profile/Profile";
 import { Iconify } from "react-native-iconify";
 import DrawerContent from "../components/DrawerContent";
+import CreateEditClass from "../screens/Classes/CreateEditClass";
+import SyncPage from "../screens/Auth/SyncPage";
 
 enableScreens(true);
 
@@ -84,6 +86,7 @@ const RootNavigator = () => {
       }}
     >
       <Stack.Screen name={AppPages.ROOTLANDING} component={RootLanding} />
+      <Stack.Screen name={AppPages.SYNCPAGE} component={SyncPage} />
       <Stack.Screen name={AppPages.ONBOARD} component={Onboard} />
       <Stack.Screen name={AppPages.SIGNUP} component={Signup} />
       <Stack.Screen name={AppPages.LOGIN} component={Signin} />
@@ -109,8 +112,12 @@ const RootNavigator = () => {
           name={AppPages.CREATEEDITNOTE}
           component={CreateEditNote}
         />
+        <Stack.Screen
+          name={AppPages.CREATEEDITCLASS}
+          component={CreateEditClass}
+        />
       </Stack.Group>
-      <Stack.Screen name={AppPages.HOME} component={MainPages} />
+      <Stack.Screen name={AppPages.MAINPAGES} component={MainPages} />
     </Stack.Navigator>
   );
 };

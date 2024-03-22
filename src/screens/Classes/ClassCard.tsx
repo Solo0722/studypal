@@ -33,7 +33,7 @@ const ClassCard = ({ orientation, index }: Props) => {
         w={orientation === "horizontal" ? "360" : "full"}
         p="3"
         borderRadius={10}
-        bgColor={theme.ACCENT_TERTIARY}
+        bgColor={theme.ACCENT}
       >
         <View
           w="full"

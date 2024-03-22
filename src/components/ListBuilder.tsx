@@ -6,6 +6,7 @@ import { ListRenderItem } from "react-native";
 type Props = {
   data: any[];
   listTitle?: string;
+  listTitleColor?: string;
   showListTitle?: boolean;
   renderItem: ListRenderItem<any>;
   horizontal?: boolean;
@@ -34,7 +35,11 @@ const ListBuilder = (props: Props) => {
   return (
     <VStack space="2">
       {props.showListTitle && (
-        <Text fontSize={10} fontWeight={"semibold"} color={theme.FOREGROUND}>
+        <Text
+          fontSize={10}
+          fontWeight={"bold"}
+          color={props.listTitleColor || theme.FOREGROUND}
+        >
           {props.listTitle}
         </Text>
       )}

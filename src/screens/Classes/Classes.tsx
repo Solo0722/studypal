@@ -11,18 +11,20 @@ import { CONSTANTS } from "../../shared/constants";
 
 const Classes = (props: NavigationProps) => {
   return (
-    <VirtualizedList>
-      <VStack space="6" py="4" px="2" w="full">
-        <ListBuilder
-          data={new Array(10)}
-          renderItem={({ index }) => (
-            <ClassCard orientation={"vertical"} index={index} />
-          )}
-          ItemSeparatorComponent={() => <View my="2" />}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 150 }}
-        />
-      </VStack>
+    <>
+      <VirtualizedList>
+        <VStack space="6" py="4" px="2" w="full">
+          <ListBuilder
+            data={new Array(20)}
+            renderItem={({ index }) => (
+              <ClassCard orientation={"vertical"} index={index} />
+            )}
+            ItemSeparatorComponent={() => <View my="2" />}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 150 }}
+          />
+        </VStack>
+      </VirtualizedList>
       <FabButton
         bottom={10}
         icon={
@@ -34,10 +36,12 @@ const Classes = (props: NavigationProps) => {
           />
         }
         onPress={() =>
-          props.navigation.navigate(CONSTANTS.AppPages.CREATECLASS)
+          props.navigation.navigate(CONSTANTS.AppPages.CREATEEDITCLASS, {
+            classData: null,
+          })
         }
       />
-    </VirtualizedList>
+    </>
   );
 };
 

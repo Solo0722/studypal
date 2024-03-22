@@ -18,12 +18,19 @@ export type Note = {
   category?: string;
 };
 
-export type Class = {
+export type ClassData = {
   id: string;
-  name: string;
   color: string;
   userId: string;
+  subject: string;
+  module?: string | number;
   tutor?: string;
+  building?: string;
+  room?: string | number;
+  repeat: boolean;
+  startDate: Date;
+  endDate: Date;
+  timeDurations: { [day: string]: Date }[];
 };
 
 export type Task = {
