@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import React, { useContext, useState } from "react";
-import { Button, IconButton, View } from "native-base";
+import { Button, IconButton, VStack, View } from "native-base";
 import NoteCard from "./NoteCard";
 import FabButton from "../../components/FabButton";
 import { Iconify } from "react-native-iconify";
@@ -13,6 +13,8 @@ import ListBuilder from "../../components/ListBuilder";
 import { GlobalContext } from "../../store/context";
 import isEmpty from "lodash/isEmpty";
 import Empty from "../../components/Empty";
+import MasonryList from "@react-native-seoul/masonry-list";
+import VirtualizedList from "../../components/VirtualisedList";
 
 const { AppPages, CommonStyles } = CONSTANTS;
 
@@ -54,8 +56,25 @@ const Notes = (props: NavigationProps) => {
   const renderContent = () => {
     if (isEmpty(notesState)) return <Empty />;
     return (
-      <>
-        <View w="full" flexDir={"row"} bgColor={theme.BACKGROUND} px="2" py="4">
+      <VirtualizedList>
+        <VStack space="6" py="4" px="2" w="full">
+          <ListBuilder
+            data={notesState}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item, index }) => (
+              <NoteCard orientation={"vertical"} item={item} index={index} />
+            )}
+            ItemSeparatorComponent={() => <View my="2" />}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 150 }}
+            numColumns={2}
+            columnWrapperStyle={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          />
+        </VStack>
+        {/* <View w="full" flexDir={"row"} bgColor={theme.BACKGROUND} px="2" py="4">
           <ListBuilder
             data={[...new Array(5)]}
             renderItem={({ index }) => (
@@ -87,7 +106,7 @@ const Notes = (props: NavigationProps) => {
                   <Iconify
                     icon="solar:add-circle-outline"
                     size={20}
-                    color={theme.FOREGROUND}
+                    color={theme.BACKGROUND}
                     strokeWidth={20}
                   />
                 }
@@ -97,19 +116,8 @@ const Notes = (props: NavigationProps) => {
             showsHorizontalScrollIndicator={false}
             horizontal
           />
-        </View>
-        <ListBuilder
-          data={notesState}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <NoteCard orientation={"vertical"} item={item} />
-          )}
-          ItemSeparatorComponent={() => <View my="2" />}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 150 }}
-          px={2}
-        />
-      </>
+        </View> */}
+      </VirtualizedList>
     );
   };
 
@@ -117,16 +125,17 @@ const Notes = (props: NavigationProps) => {
     <View flex={1} h="full" w="full">
       {renderContent()}
       <FabButton
+        bottom={10}
         icon={
           <Iconify
             icon="solar:pen-new-square-outline"
             size={24}
-            color={theme.FOREGROUND}
+            color={theme.BACKGROUND}
             strokeWidth={20}
           />
         }
         onPress={() =>
-          props.navigation.navigate(AppPages.CREATEEDITNOTE, { isEdit: false })
+          props.navigation.navigate(AppPages.CREATEEDITNOTE, { noteData: null })
         }
       />
     </View>

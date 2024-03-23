@@ -32,6 +32,68 @@ const DrawerContent = (props: DrawerContentComponentProps) => {
     props.navigation.navigate(CONSTANTS.AppPages.ONBOARD);
   };
 
+  const routeIcons = (iconProps) => {
+    return {
+      Home: (
+        <Iconify
+          {...iconProps}
+          icon="solar:home-smile-outline"
+          // size={22}
+          strokeWidth={20}
+        />
+      ),
+      Calendar: (
+        <Iconify
+          {...iconProps}
+          icon="solar:calendar-outline"
+          // size={22}
+          strokeWidth={20}
+        />
+      ),
+      Notes: (
+        <Iconify
+          {...iconProps}
+          icon="solar:documents-outline"
+          // size={22}
+          strokeWidth={20}
+        />
+      ),
+      Tasks: (
+        <Iconify
+          {...iconProps}
+          icon="solar:clipboard-list-outline"
+          // size={22}
+          strokeWidth={20}
+        />
+      ),
+
+      Classes: (
+        <Iconify
+          {...iconProps}
+          icon="solar:square-academic-cap-2-outline"
+          // size={22}
+          strokeWidth={20}
+        />
+      ),
+      Exams: (
+        <Iconify
+          {...iconProps}
+          icon="solar:notebook-bookmark-outline"
+          // size={22}
+          strokeWidth={20}
+        />
+      ),
+      Settings: (
+        <Iconify
+          {...iconProps}
+          icon="solar:settings-outline"
+          // size={22}
+          strokeWidth={20}
+        />
+      ),
+    };
+  };
+
   return (
     <View bgColor={theme.PRIMARY} w="full" h="full" py="10">
       <View
@@ -42,14 +104,23 @@ const DrawerContent = (props: DrawerContentComponentProps) => {
         alignItems="center"
         style={{
           marginVertical: 10,
-          marginHorizontal: 10,
+          marginHorizontal: 15,
         }}
       >
         <HStack w="full" space="3">
-          <Avatar size={"md"} />
+          <Avatar
+            _image={{
+              rounded: "md",
+            }}
+            size={10}
+            rounded={"md"}
+            source={{
+              uri: "https://static.vecteezy.com/system/resources/thumbnails/030/798/365/small/beautiful-asian-girl-wearing-over-size-hoodie-in-casual-style-ai-generative-photo.jpg",
+            }}
+          />
           <VStack justifyContent={"center"}>
             <Text color={theme.ACCENT_FOREGROUND}>Hello</Text>
-            <Text color={theme.SECONDARY} fontWeight={"bold"} fontSize={20}>
+            <Text color={theme.SECONDARY} fontWeight={"bold"} fontSize={16}>
               Solomon Owusu-Ansah
             </Text>
           </VStack>
@@ -61,7 +132,7 @@ const DrawerContent = (props: DrawerContentComponentProps) => {
             {...route}
             style={{
               borderRadius: 16,
-              marginVertical: 10,
+              marginVertical: 5,
             }}
             // focused={}
             key={route.key}
@@ -70,14 +141,7 @@ const DrawerContent = (props: DrawerContentComponentProps) => {
             activeBackgroundColor="#4e4e"
             activeTintColor={theme.BACKGROUND}
             inactiveTintColor={theme.BACKGROUND}
-            icon={(props) => (
-              <Iconify
-                {...props}
-                icon="solar:home-smile-outline"
-                // size={22}
-                strokeWidth={20}
-              />
-            )}
+            icon={(props) => routeIcons(props)[route.name]}
           />
         ))}
       </View>
@@ -91,7 +155,7 @@ const DrawerContent = (props: DrawerContentComponentProps) => {
         alignItems="center"
         style={{
           //   marginVertical: 10,
-          marginHorizontal: 10,
+          marginHorizontal: 15,
         }}
       >
         <Button

@@ -15,8 +15,7 @@ const FolderCard = (props) => {
       flexDirection={"row"}
       alignItems={"flex-start"}
       _text={{
-        color:
-          activeFolder === index ? theme.FOREGROUND : theme.ACCENT_FOREGROUND,
+        color: activeFolder === index ? theme.SECONDARY : theme.BACKGROUND,
         fontSize: "xs",
         fontWeight: "normal",
         textAlign: "center",

@@ -22,6 +22,7 @@ export const CONSTANTS = {
     NOTE: "Note",
     CREATEEDITNOTE: "CreateEditNote",
     CREATEEDITCLASS: "CreateEditClass",
+    CREATEEDITTASK: "CreateEditTask",
     AUTH: "Auth",
     ONBOARD: "Onboard",
   },
@@ -29,6 +30,7 @@ export const CONSTANTS = {
     USER: "studypal_user",
     NOTES: "studypal_notes",
     CLASSES: "studypal_classes",
+    TASKS: "studypal_tasks",
   },
   CommonStyles: {
     headerRightStyle: {
@@ -49,5 +51,10 @@ export const CONSTANTS = {
     SET_CLASSES: "SET_CLASSES",
     UPDATE_CLASS: "UPDATE_CLASS",
     DELETE_CLASS: "DELETE_CLASS",
+
+    CREATE_TASK: "CREATE_TASK",
+    SET_TASKS: "SET_TASKS",
+    UPDATE_TASK: "UPDATE_TASK",
+    DELETE_TASK: "DELETE_TASK",
   },
 };

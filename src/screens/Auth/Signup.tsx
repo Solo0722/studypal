@@ -70,7 +70,6 @@ const Signup = ({ navigation }) => {
         signupFormData.email,
         signupFormData.password
       );
-      console.log("regiester: ", response);
 
       if (response.error) {
         toast.show({

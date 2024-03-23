@@ -4,7 +4,10 @@ import React from "react";
 const Exams = () => {
   return (
     <View>
-      <Text>Exams</Text>
+      <Text>
+        Exams {"\n"}
+        Coming Soon...
+      </Text>
     </View>
   );
 };

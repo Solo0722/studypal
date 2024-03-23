@@ -16,6 +16,8 @@ export type Note = {
   userId: string;
   attachments?: any[];
   category?: string;
+  relatedClassId?: string;
+  relatedSubjectId?: string;
 };
 
 export type ClassData = {
@@ -23,6 +25,7 @@ export type ClassData = {
   color: string;
   userId: string;
   subject: string;
+  // relatedSubjectId: string;
   module?: string | number;
   tutor?: string;
   building?: string;
@@ -30,20 +33,39 @@ export type ClassData = {
   repeat: boolean;
   startDate: Date;
   endDate: Date;
-  timeDurations: { [day: string]: Date }[];
+  timeDurations: {
+    [day: string]: {
+      startTime: Date;
+      endTime: Date;
+    };
+  }[];
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
-export type Task = {
+export type TaskStep = {
   id: string;
   title: string;
+  isCompleted: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+
+export type TaskData = {
+  id: string;
+  color: string;
+  title: string;
   description: string;
-  taskType: string;
+  taskType: "revision" | "assignment" | "others";
   dueDate: Date;
-  completed: boolean;
+  isCompleted: boolean;
   userId: string;
-  classId: string;
-  subjectId: string;
+  relatedSubjectId?: string;
   progress?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  taskSteps?: TaskStep[];
+  reminderDate?: Date;
 };
 
 export type Subject = {

@@ -17,15 +17,30 @@ import {
   getTasksDataFromDB,
 } from "../../services/dbServices";
 import { NavigationProps } from "../../shared/types";
+import NetInfo from "@react-native-community/netinfo";
+import Loader from "../../components/Loader";
 
 const SyncPage = (props: NavigationProps) => {
-  const { setClassesData, setNotesData } = React.useContext(GlobalContext);
-
-  const internetConnectionAvailable = true; //dummy variable
+  const { setClassesData, setNotesData, classesState, notesState } =
+    React.useContext(GlobalContext);
 
   const handleInitialise = async () => {
     const user = await readFromAsyncStorage(CONSTANTS.STORAGE_KEYS.USER);
+    const internetConnectionAvailable = await NetInfo.fetch().then((state) => {
+      return state.isConnected;
+    });
     if (user) {
+      const classesData = await readFromAsyncStorage(
+        CONSTANTS.STORAGE_KEYS.CLASSES
+      );
+      setClassesData(classesData);
+
+      const notesData = await readFromAsyncStorage(
+        CONSTANTS.STORAGE_KEYS.NOTES
+      );
+      setNotesData(notesData);
+      console.log("notesdata: ", notesData);
+      console.log("classesData: ", classesData);
       // if (internetConnectionAvailable) {
       //   const classesData = await getClassesDataFromDB(user.id);
       //   const notesData = await getNotesDataFromDB(user.id);
@@ -46,7 +61,6 @@ const SyncPage = (props: NavigationProps) => {
       //   setClassesData(classesData);
       //   setNotesData(notesData);
       // }
-      console.log("User here...");
       props.navigation.navigate(CONSTANTS.AppPages.MAINPAGES);
     } else {
       props.navigation.navigate(CONSTANTS.AppPages.LOGIN);
@@ -60,9 +74,8 @@ const SyncPage = (props: NavigationProps) => {
 
   return (
     <MainContent>
-      <Center justifyContent={"center"} alignItems={"center"}>
-        <Text color={theme.FOREGROUND}>Loading your data...</Text>
-        <Button>Hello</Button>
+      <Center w="full" h="full" justifyContent={"center"} alignItems={"center"}>
+        <Loader />
       </Center>
     </MainContent>
   );

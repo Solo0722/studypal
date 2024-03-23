@@ -131,11 +131,7 @@ const Profile = (props: NavigationProps) => {
           size={"sm"}
           color={theme.FOREGROUND}
         />
-        <Heading
-          fontSize={12}
-          fontWeight={"normal"}
-          // color={"black"}
-        >
+        <Heading fontSize={14} fontWeight={"normal"} color={"black"}>
           {item.name}
         </Heading>
       </HStack>
@@ -152,7 +148,7 @@ const Profile = (props: NavigationProps) => {
         renderSectionHeader={({ section }) => (
           <Heading
             fontSize={9}
-            color={theme.ACCENT_FOREGROUND}
+            color={theme.SECONDARY}
             style={styles.sectionHeader}
           >
             {section.title.toUpperCase()}

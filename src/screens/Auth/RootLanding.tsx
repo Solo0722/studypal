@@ -14,7 +14,6 @@ const RootLanding = (props: NavigationProps) => {
     const data = await readFromAsyncStorage(STORAGE_KEYS.USER);
 
     if (data) {
-      console.log(data);
       updateUserData(data);
       props.navigation.navigate(AppPages.SYNCPAGE);
     } else {

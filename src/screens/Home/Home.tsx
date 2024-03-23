@@ -25,7 +25,7 @@ const Home = (props: NavigationProps) => {
 
   const fetchHomeSummaryData = () => {
     setLoading(true);
-    setHomeSummaryData(getHomeSummaryData(classesState, notesState));
+    setHomeSummaryData(getHomeSummaryData(notesState, classesState));
     setLoading(false);
   };
 
@@ -69,9 +69,13 @@ const Home = (props: NavigationProps) => {
           ) : (
             <>
               {homeSummaryData.upcomingClasses.length > 0 && (
-                <UpcomingClasses />
+                <UpcomingClasses
+                  upcomingClasses={homeSummaryData.upcomingClasses}
+                />
               )}
-              {homeSummaryData.recentNotes.length > 0 && <RecentNotes />}
+              {homeSummaryData.recentNotes.length > 0 && (
+                <RecentNotes recentNotes={homeSummaryData.recentNotes} />
+              )}
             </>
           )}
         </>

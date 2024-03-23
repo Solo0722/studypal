@@ -6,14 +6,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 const QuotesBanner = () => {
   return (
-    <View
-      px="2"
-      w="full"
-      height="200"
-      rounded="10"
-      shadow={5}
-      bgColor={theme.ACCENT}
-    >
+    <View px="2" w="full" height="200" rounded="10" bgColor={theme.ACCENT}>
       {/* <ImageBackground source={ {uri: ""}} /> */}
     </View>
   );

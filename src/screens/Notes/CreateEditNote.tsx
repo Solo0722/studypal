@@ -12,15 +12,14 @@ import MainContent from "../../components/MainContent";
 import RichTextEditor from "./RichTextEditor";
 import { GlobalContext } from "../../store/context";
 import uuid from "uuid";
-import { Note } from "../../shared/types";
+import { Note as NoteData } from "../../shared/types";
 import { saveToAsyncStorage } from "../../services/storageService";
 
 type Props = {
   navigation: NavigationProp<any>;
   route: RouteProp<{
     params: {
-      noteId?: number;
-      isEdit: boolean;
+      noteData: NoteData | null;
     };
   }>;
 };
@@ -28,56 +27,73 @@ type Props = {
 const CreateEditNote = (props: Props) => {
   const { notesState, createNote, updateNote, userState } =
     useContext(GlobalContext);
-  const isEditNote = props.route.params.isEdit;
+  const isNewNote = !props.route.params.noteData;
+  const noteData = props.route.params.noteData;
   const toast = useToast();
-  const getNote = (id: number | string) => {
-    return notesState.find((note) => note.id.toString() === id.toString());
-  };
 
-  const note = isEditNote ? getNote(props.route.params.noteId) : null;
-
-  const [noteData, setNoteData] = useState(
-    isEditNote
-      ? note
-      : {
-          id: null,
+  const [noteFormData, setNoteFormData] = useState(
+    isNewNote
+      ? {
           title: "",
           content: null,
-          updatedAt: null,
-          createdAt: null,
           attachments: [],
+          category: "Personal",
+        }
+      : {
+          title: noteData.title,
+          content: noteData.content,
+          attachments: noteData.attachments,
+          category: noteData.category,
         }
   );
 
-  const onSaveNote = async () => {
-    const newNote: Note = {
-      id: Math.floor(Math.random() * 1000),
-      title: noteData.title || "",
-      content: noteData.content || "",
+  const onAddNote = async () => {
+    const newNote: NoteData = {
+      id: Math.floor(Math.random() * 1000).toString(),
+      title: noteFormData.title || "",
+      content: noteFormData.content || "",
       updatedAt: new Date(),
       createdAt: new Date(),
-      attachments: noteData.attachments || [],
-      userId: userState.email,
+      attachments: noteFormData.attachments || [],
+      userId: userState.uid,
+    };
+    createNote(newNote);
+    await saveToAsyncStorage(CONSTANTS.STORAGE_KEYS.NOTES, [
+      ...notesState,
+      newNote,
+    ]).then(() =>
+      toast.show({
+        title: "Note Added",
+        colorScheme: "success",
+      })
+    );
+    props.navigation.goBack();
+  };
+
+  const onUpdateNote = async () => {
+    const updatedNote: NoteData = {
+      id: noteData.id,
+      title: noteFormData.title || noteData.title,
+      content: noteFormData.content || noteData.content,
+      updatedAt: new Date(),
+      createdAt: noteData.createdAt,
+      attachments: noteFormData.attachments || [],
+      userId: userState.uid,
     };
 
-    isEditNote ? updateNote({ ...note, ...noteData }) : createNote(newNote);
-    console.log("saved");
+    updateNote({
+      ...noteData,
+      ...updatedNote,
+    });
     await saveToAsyncStorage(CONSTANTS.STORAGE_KEYS.NOTES, notesState).then(
       () =>
         toast.show({
-          title: "Note Saved",
+          title: "Note Updated",
           colorScheme: "success",
         })
     );
+    props.navigation.goBack();
   };
-
-  const renderNoteTitleInput = () => (
-    <Input
-      placeholder="Note Title"
-      value={noteData.title}
-      onChangeText={(e) => setNoteData({ ...noteData, title: e })}
-    />
-  );
 
   useFocusEffect(
     React.useCallback(() => {
@@ -96,7 +112,7 @@ const CreateEditNote = (props: Props) => {
               variant={"ghost"}
               colorScheme={"coolGray"}
               rounded={"full"}
-              onPress={onSaveNote}
+              onPress={() => (isNewNote ? onAddNote() : onUpdateNote())}
             />
             <IconButton
               icon={
@@ -115,7 +131,7 @@ const CreateEditNote = (props: Props) => {
           </HStack>
         ),
         headerRightContainerStyle: CONSTANTS.CommonStyles.headerRightStyle,
-        headerTitle: props.route.params.isEdit ? note.title : "Note Title",
+        headerTitle: isNewNote ? "Add new note" : noteData.title,
       });
 
       // return () => {
@@ -128,13 +144,21 @@ const CreateEditNote = (props: Props) => {
     }, [])
   );
 
+  const renderNoteTitleInput = () => (
+    <Input
+      placeholder="Note Title"
+      defaultValue={noteFormData.title}
+      onChangeText={(e) => setNoteFormData({ ...noteFormData, title: e })}
+    />
+  );
+
   return (
     <MainContent>
       {renderNoteTitleInput()}
-      <RichTextEditor
-        noteContent={noteData.content}
-        setNoteContent={(e) => setNoteData({ ...noteData, content: e })}
-      />
+      {/* <RichTextEditor
+        noteContent={noteFormData?.content || ""}
+        setNoteContent={(e) => setNoteFormData({ ...noteFormData, content: e })}
+      /> */}
     </MainContent>
   );
 };

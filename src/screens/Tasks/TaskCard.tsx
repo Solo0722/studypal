@@ -17,13 +17,14 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { theme } from "../../shared/theme";
 import { CONSTANTS } from "../../shared/constants";
 import { getRandomColor, truncateString } from "../../services/uiService";
+import { TaskData } from "../../shared/types";
 
 type Props = {
-  orientation: "horizontal" | "vertical";
   index: number;
+  item: TaskData;
 };
 
-const TaskCard = ({ orientation, index }: Props) => {
+const TaskCard = ({ index, item }: Props) => {
   const { navigate } = useNavigation<NavigationProp<any>>();
 
   return (
@@ -31,7 +32,7 @@ const TaskCard = ({ orientation, index }: Props) => {
       <Box
         // minH={"250"}
         // maxH={"300"}
-        w={orientation === "horizontal" ? "360" : "full"}
+        w={"full"}
         p="3"
         borderRadius={10}
         bgColor={theme.ACCENT}
@@ -45,10 +46,17 @@ const TaskCard = ({ orientation, index }: Props) => {
         >
           <HStack space="2" alignItems={"center"}>
             <Checkbox
-              value={"hello"}
-              borderColor={getRandomColor()}
+              aria-label="Checkbox"
+              value=""
+              isChecked={item.isCompleted}
+              onChange={(isSelected) => null}
+              // borderColor={item.color}
               _checked={{
-                backgroundColor: getRandomColor(),
+                backgroundColor: item.color,
+                borderColor: item.color,
+              }}
+              _unchecked={{
+                borderColor: item.color,
               }}
               borderRadius={"full"}
               size={"lg"}
@@ -69,16 +77,19 @@ const TaskCard = ({ orientation, index }: Props) => {
               }
             /> */}
             <VStack space={1}>
-              <Heading fontSize={"sm"} fontWeight={"bold"}>
-                Computer Organisation
+              <Heading
+                fontSize={"sm"}
+                fontWeight={"bold"}
+                color={theme.BACKGROUND}
+              >
+                {item.title}
               </Heading>
               <Text
                 fontSize={9}
                 color={theme.ACCENT_FOREGROUND}
                 fontWeight="semibold"
               >
-                {format(new Date(), "cccc do MMMM yyyy")}{" "}
-                {format(new Date(), "hh:mm a")}
+                Due Date: {format(new Date(), "cccc do MMMM yyyy")}
               </Text>
             </VStack>
           </HStack>
@@ -105,7 +116,7 @@ const TaskCard = ({ orientation, index }: Props) => {
             color={theme.ACCENT_FOREGROUND}
             fontWeight="semibold"
           >
-            55% complete
+            {item.progress || 0}% complete
           </Text>
         </View>
       </Box>

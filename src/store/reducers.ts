@@ -3,6 +3,7 @@ import {
   initialUserState,
   initialNotesState,
   initialClassesState,
+  initialTasksState,
 } from "./initialStates";
 
 const {
@@ -18,6 +19,11 @@ const {
   SET_CLASSES,
   UPDATE_CLASS,
   DELETE_CLASS,
+
+  CREATE_TASK,
+  DELETE_TASK,
+  UPDATE_TASK,
+  SET_TASKS,
 } = CONSTANTS.ACTION_TYPES;
 
 export const userReducer = (state = initialUserState, action) => {
@@ -63,6 +69,23 @@ export const classesReducers = (state = initialClassesState, action) => {
     case UPDATE_CLASS:
       return state.map((classData) =>
         classData.id === action.payload.id ? action.payload : classData
+      );
+    default:
+      return state;
+  }
+};
+
+export const tasksReducers = (state = initialTasksState, action) => {
+  switch (action.type) {
+    case SET_TASKS:
+      return [...state, ...action.payload];
+    case CREATE_TASK:
+      return [...state, action.payload];
+    case DELETE_TASK:
+      return state.filter((taskData) => taskData.id !== action.payload.id);
+    case UPDATE_TASK:
+      return state.map((taskData) =>
+        taskData.id === action.payload.id ? action.payload : taskData
       );
     default:
       return state;

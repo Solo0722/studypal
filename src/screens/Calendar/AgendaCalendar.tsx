@@ -5,18 +5,24 @@ import {
   AgendaList,
   CalendarProvider,
   WeekCalendar,
+  AgendaListProps,
 } from "react-native-calendars";
-import { agendaItems, getMarkedDates } from "./helpers/agendaItems";
+import {
+  agendaItems,
+  getAgendaItems,
+  getMarkedDates,
+} from "./helpers/agendaItems";
 import AgendaItem from "./AgendaItem";
 import { getTheme, themeColor } from "./helpers/theme";
 import testIDs from "./helpers/testIDs";
 import { theme } from "../../shared/theme";
 import ClassCard from "../Classes/ClassCard";
-
-const ITEMS: any[] = agendaItems;
+import { ClassData, Note } from "../../shared/types";
 
 interface Props {
   weekView?: boolean;
+  notes?: Note[];
+  classes?: ClassData[];
 }
 
 const AgendaCalendar = (props: Props) => {
@@ -27,6 +33,8 @@ const AgendaCalendar = (props: Props) => {
     todayButtonTextColor: themeColor,
   });
 
+  const ITEMS: any[] = getAgendaItems(props.classes, props.notes);
+
   // const onDateChanged = useCallback((date, updateSource) => {
   //   console.log('AgendaCalendar onDateChanged: ', date, updateSource);
   // }, []);
@@ -35,8 +43,9 @@ const AgendaCalendar = (props: Props) => {
   //   console.log('AgendaCalendar onMonthChange: ', dateString);
   // }, []);
 
-  const renderItem = useCallback(({ item }: any) => {
-    return <ClassCard orientation="" />;
+  const renderItem = useCallback(({ item, index }: any) => {
+    console.log("item: ", item);
+    return <ClassCard orientation="vertical" index={index} />;
   }, []);
 
   return (

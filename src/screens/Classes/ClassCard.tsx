@@ -16,17 +16,27 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { theme } from "../../shared/theme";
 import { CONSTANTS } from "../../shared/constants";
 import { getRandomColor, truncateString } from "../../services/uiService";
+import { ClassData } from "../../shared/types";
+import moment from "moment";
 
 type Props = {
   orientation: "horizontal" | "vertical";
   index: number;
+  item: ClassData;
 };
 
-const ClassCard = ({ orientation, index }: Props) => {
+const ClassCard = ({ orientation, index, item }: Props) => {
   const { navigate } = useNavigation<NavigationProp<any>>();
 
   return (
-    <Pressable>
+    <Pressable
+      android_ripple={{ color: theme.ACCENT_FOREGROUND }}
+      onPress={() =>
+        navigate(CONSTANTS.AppPages.CREATEEDITCLASS, {
+          classData: item,
+        })
+      }
+    >
       <Box
         // minH={"250"}
         // maxH={"300"}
@@ -46,7 +56,7 @@ const ClassCard = ({ orientation, index }: Props) => {
             <IconButton
               variant={"unstyled"}
               colorScheme={"coolGray"}
-              bgColor={getRandomColor()}
+              bgColor={item?.color || getRandomColor()}
               display={"flex"}
               flexDirection={"row"}
               alignItems={"flex-start"}
@@ -64,16 +74,25 @@ const ClassCard = ({ orientation, index }: Props) => {
                 fontWeight={"bold"}
                 color={theme.BACKGROUND}
               >
-                Computer Organisation
+                {item?.subject || "Computer Organisation"}
               </Heading>
-              <Text
-                fontSize={9}
-                color={theme.ACCENT_FOREGROUND}
-                fontWeight="semibold"
-              >
-                {format(new Date(), "hh:mm a")} -{" "}
-                {format(new Date(-3), "hh:mm a")} {format(new Date(), "cccc")}
-              </Text>
+              {item?.timeDurations &&
+                item.timeDurations.map((timeDuration) => (
+                  <Text
+                    fontSize={9}
+                    color={theme.ACCENT_FOREGROUND}
+                    fontWeight="semibold"
+                  >
+                    {moment(Object.values(timeDuration)[0].startTime).format(
+                      "hh:mm a"
+                    )}{" "}
+                    -{" "}
+                    {moment(Object.values(timeDuration)[0].endTime).format(
+                      "hh:mm a"
+                    )}{" "}
+                    {Object.keys(timeDuration)[0]}
+                  </Text>
+                ))}
             </VStack>
           </HStack>
           {/* <IconButton
@@ -99,7 +118,7 @@ const ClassCard = ({ orientation, index }: Props) => {
             color={theme.ACCENT_FOREGROUND}
             fontWeight="semibold"
           >
-            {truncateString("Eliel Keelson", 15)}
+            {truncateString(item?.tutor || "Eliel Keelson", 15)}
           </Text>
         </View>
       </Box>

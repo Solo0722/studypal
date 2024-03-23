@@ -3,13 +3,18 @@ import ListBuilder from "../../components/ListBuilder";
 import { View } from "native-base";
 import ClassCard from "../Classes/ClassCard";
 import { theme } from "../../shared/theme";
+import { ClassData } from "../../shared/types";
 
-const UpcomingClasses = () => {
+type Props = {
+  upcomingClasses: ClassData[];
+};
+
+const UpcomingClasses = (props: Props) => {
   return (
     <ListBuilder
-      data={new Array(2)}
-      renderItem={({ index }) => (
-        <ClassCard orientation={"vertical"} index={index} />
+      data={props.upcomingClasses}
+      renderItem={({ item, index }) => (
+        <ClassCard orientation={"vertical"} index={index} item={item} />
       )}
       ItemSeparatorComponent={() => <View my="2" />}
       showsHorizontalScrollIndicator={false}

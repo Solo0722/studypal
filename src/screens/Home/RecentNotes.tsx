@@ -7,23 +7,30 @@ import ListBuilder from "../../components/ListBuilder";
 import { GlobalContext } from "../../store/context";
 import Empty from "../../components/Empty";
 import isEmpty from "lodash";
+import { Note } from "../../shared/types";
 
-const RecentNotes = () => {
-  const { notesState } = useContext(GlobalContext);
+type Props = {
+  recentNotes: Note[];
+};
 
-  if (isEmpty(notesState)) return <Empty />;
-
+const RecentNotes = (props: Props) => {
   return (
     <ListBuilder
-      data={notesState.slice(0, 2)}
-      renderItem={({ item }) => (
-        <NoteCard orientation={"vertical"} item={item} />
+      data={props.recentNotes}
+      renderItem={({ item, index }) => (
+        <NoteCard orientation={"vertical"} item={item} index={index} />
       )}
       ItemSeparatorComponent={() => <View my="2" />}
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={{ paddingBottom: 150 }}
       showListTitle
       listTitle={"Recent Notes"}
+      listTitleColor={theme.SECONDARY}
+      numColumns={2}
+      columnWrapperStyle={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+      }}
     />
   );
 };

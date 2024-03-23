@@ -16,33 +16,28 @@ import {
 import { Iconify } from "react-native-iconify";
 import { theme } from "../../shared/theme";
 import { CONSTANTS } from "../../shared/constants";
-import { ClassData } from "../../shared/types";
-import { getHomeSummaryData } from "../../services/dataService";
+import { TaskData } from "../../shared/types";
 import { GlobalContext } from "../../store/context";
 import { getRandomColor } from "../../services/uiService";
-import {
-  readFromAsyncStorage,
-  saveToAsyncStorage,
-} from "../../services/storageService";
+import { saveToAsyncStorage } from "../../services/storageService";
 import moment from "moment";
 
 type Props = {
   navigation: NavigationProp<any>;
   route: RouteProp<{
     params: {
-      classData: ClassData | null;
+      taskData: TaskData | null;
     };
   }>;
 };
 
-const CreateEditClass = (props: Props) => {
+const CreateEditTask = (props: Props) => {
   const [isEdit, setIsEdit] = React.useState(false);
-  const isNewClass = !props.route.params.classData;
-  const { createClass, userState, classesState } =
-    React.useContext(GlobalContext);
+  const isNewTask = !props.route.params.taskData;
+  const { createTask, userState, tasksState } = React.useContext(GlobalContext);
   const toast = useToast();
   const getHeaderRightButtons = () => {
-    if (isNewClass)
+    if (isNewTask)
       return (
         <IconButton
           icon={
@@ -56,7 +51,7 @@ const CreateEditClass = (props: Props) => {
           variant={"ghost"}
           colorScheme={"coolGray"}
           rounded={"full"}
-          onPress={addClass}
+          onPress={addTask}
         />
       );
 
@@ -113,7 +108,7 @@ const CreateEditClass = (props: Props) => {
   useFocusEffect(
     React.useCallback(() => {
       props.navigation.setOptions({
-        headerTitle: isNewClass ? "Add Class" : " View or Edit Class",
+        headerTitle: isNewTask ? "Add Task" : " View or Edit Task",
         headerRight: () => <HStack space="1">{getHeaderRightButtons()}</HStack>,
         headerRightContainerStyle: CONSTANTS.CommonStyles.headerRightStyle,
       });
@@ -128,41 +123,51 @@ const CreateEditClass = (props: Props) => {
     }, [])
   );
 
-  const addClass = async () => {
-    const data: ClassData = {
+  const addTask = async () => {
+    const data: TaskData = {
       id: Math.floor(Math.random() * 1000).toString(),
       color: getRandomColor(),
       userId: userState.uid,
-      subject: "Algebra",
-      module: "I",
-      building: "Petroleum Building",
-      room: "Room 219",
-      tutor: "Dr. Ezearn Dadzie",
-      repeat: true,
-      startDate: moment().subtract(5, "days").toDate(),
-      endDate: moment().add(5, "days").toDate(),
-      timeDurations: [
+      title: "Do Computer Networking Assignment",
+      description: "Assignment 1",
+      dueDate: new Date(),
+      isCompleted: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      progress: 40,
+      reminderDate: moment().add(1, "days").toDate(),
+      taskType: "assignment",
+      taskSteps: [
         {
-          Monday: {
-            startTime: moment().add(2, "hours").toDate(),
-            endTime: moment().add(5, "hours").toDate(),
-          },
+          id: Math.floor(Math.random() * 1000).toString(),
+          title: "Read the assignment",
+          isCompleted: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
         {
-          Wednesday: {
-            startTime: moment().add(5, "hours").toDate(),
-            endTime: moment().add(7, "hours").toDate(),
-          },
+          id: Math.floor(Math.random() * 1000).toString(),
+          title: "Write the assignment",
+          isCompleted: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          id: Math.floor(Math.random() * 1000).toString(),
+          title: "Submit the assignment",
+          isCompleted: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
       ],
     };
-    createClass(data);
-    await saveToAsyncStorage(CONSTANTS.STORAGE_KEYS.CLASSES, [
-      ...classesState,
+    createTask(data);
+    await saveToAsyncStorage(CONSTANTS.STORAGE_KEYS.TASKS, [
+      ...tasksState,
       data,
     ]).then(() =>
       toast.show({
-        title: "Class added",
+        title: "Task added",
         colorScheme: "success",
         duration: 2000,
         bgColor: "success.500",
@@ -170,8 +175,8 @@ const CreateEditClass = (props: Props) => {
     );
     props.navigation.goBack();
   };
-  const updateClassData = () => {};
-  const deleteClass = () => {};
+  const updateTaskData = () => {};
+  const deleteTask = () => {};
 
   return (
     <View px="2" py="4">
@@ -182,6 +187,6 @@ const CreateEditClass = (props: Props) => {
   );
 };
 
-export default CreateEditClass;
+export default CreateEditTask;
 
 const styles = StyleSheet.create({});

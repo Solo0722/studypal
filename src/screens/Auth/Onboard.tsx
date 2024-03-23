@@ -18,7 +18,6 @@ const Onboard = ({ navigation }: NavigationProps) => {
 
   const handleGoogleSignin = async () => {
     const response = await signinWithGoogle();
-    console.log("res from google sign: ", response);
 
     if (response.error) {
       toast.show({

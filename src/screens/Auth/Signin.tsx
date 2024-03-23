@@ -63,7 +63,6 @@ const Signin = ({ navigation }) => {
         loginFormData.email,
         loginFormData.password
       );
-      console.log("res from login: ", response);
       if (response.error) {
         toast.show({
           description: "Something went wrong!",

@@ -1,12 +1,18 @@
 import React, { createContext, useMemo, useReducer } from "react";
-import { classesReducers, notesReducers, userReducer } from "./reducers";
+import {
+  classesReducers,
+  notesReducers,
+  tasksReducers,
+  userReducer,
+} from "./reducers";
 import {
   initialClassesState,
   initialNotesState,
+  initialTasksState,
   initialUserState,
 } from "./initialStates";
 import { CONSTANTS } from "../shared/constants";
-import { ClassData, Note } from "../shared/types";
+import { ClassData, Note, TaskData } from "../shared/types";
 type Props = {
   children: React.ReactNode;
 };
@@ -25,6 +31,11 @@ export const GlobalContext = createContext({
   createClass: (classData: ClassData) => {},
   updateClass: (classData: ClassData) => {},
   deleteClass: (classData: ClassData) => {},
+  tasksState: initialTasksState,
+  setTasksData: (tasksData: TaskData[]) => {},
+  createTask: (taskData: TaskData) => {},
+  updateTask: (taskData: TaskData) => {},
+  deleteTask: (taskData: TaskData) => {},
 });
 
 const {
@@ -38,6 +49,10 @@ const {
   DELETE_CLASS,
   UPDATE_CLASS,
   SET_CLASSES,
+  CREATE_TASK,
+  DELETE_TASK,
+  UPDATE_TASK,
+  SET_TASKS,
 } = CONSTANTS.ACTION_TYPES;
 
 const GlobalProvider = (props: Props) => {
@@ -49,6 +64,10 @@ const GlobalProvider = (props: Props) => {
   const [classesState, dispatchClasses] = useReducer(
     classesReducers,
     initialClassesState
+  );
+  const [tasksState, dispatchTasks] = useReducer(
+    tasksReducers,
+    initialTasksState
   );
 
   const updateUserData = (user) => {
@@ -91,6 +110,22 @@ const GlobalProvider = (props: Props) => {
     dispatchClasses({ type: DELETE_CLASS, payload: classData });
   };
 
+  const setTasksData = (tasksData: TaskData[]) => {
+    dispatchTasks({ type: SET_TASKS, payload: tasksData });
+  };
+
+  const createTask = (taskData: TaskData) => {
+    dispatchTasks({ type: CREATE_TASK, payload: taskData });
+  };
+
+  const updateTask = (taskData: TaskData) => {
+    dispatchTasks({ type: UPDATE_TASK, payload: taskData });
+  };
+
+  const deleteTask = (taskData: TaskData) => {
+    dispatchTasks({ type: DELETE_TASK, payload: taskData });
+  };
+
   const contextValue = useMemo(() => {
     return {
       userState,
@@ -108,6 +143,12 @@ const GlobalProvider = (props: Props) => {
       createClass,
       updateClass,
       deleteClass,
+
+      tasksState,
+      setTasksData,
+      createTask,
+      updateTask,
+      deleteTask,
     };
   }, [
     userState,
@@ -125,6 +166,12 @@ const GlobalProvider = (props: Props) => {
     createClass,
     updateClass,
     deleteClass,
+
+    tasksState,
+    setTasksData,
+    createTask,
+    updateTask,
+    deleteTask,
   ]);
 
   return (

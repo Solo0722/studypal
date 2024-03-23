@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import MainContent from "../../components/MainContent";
-import { NavigationProps } from "../../shared/types";
+import { NavigationProps, Note as NoteData } from "../../shared/types";
 import {
   NavigationProp,
   RouteProp,
@@ -17,21 +17,16 @@ type Props = {
   navigation: NavigationProp<any>;
   route: RouteProp<{
     params: {
-      noteId: number;
+      noteData: NoteData | null;
     };
   }>;
 };
 
 const Note = (props: Props) => {
-  console.log(props.route.params);
-
-  const { notesState } = useContext(GlobalContext);
-
-  const getNote = (id: string | number) => {
-    return notesState.find((note) => note.id.toString() === id.toString());
-  };
-
-  const note = getNote(props.route.params.noteId);
+  const [isEdit, setIsEdit] = React.useState(false);
+  const isNewNote = !props.route.params.noteData;
+  const { createNote, userState, notesState } = React.useContext(GlobalContext);
+  const noteData = props.route.params.noteData;
 
   useFocusEffect(
     React.useCallback(() => {
@@ -52,8 +47,7 @@ const Note = (props: Props) => {
               rounded={"full"}
               onPress={() =>
                 props.navigation.navigate(CONSTANTS.AppPages.CREATEEDITNOTE, {
-                  noteId: note.id,
-                  isEdit: true,
+                  noteData,
                 })
               }
             />
@@ -74,7 +68,7 @@ const Note = (props: Props) => {
           </HStack>
         ),
         headerRightContainerStyle: CONSTANTS.CommonStyles.headerRightStyle,
-        headerTitle: note.title || "Note Title",
+        headerTitle: noteData.title,
       });
 
       return () => {
@@ -90,7 +84,7 @@ const Note = (props: Props) => {
   return (
     <MainContent>
       {/* <RichTextEditor /> */}
-      <Text>{note.content}</Text>
+      <Text>{noteData?.content}</Text>
     </MainContent>
   );
 };

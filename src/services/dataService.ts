@@ -1,13 +1,25 @@
-export const getUpcomingClasses = (classesData) => {
-  // return classesData.filter((item) => item.date > new Date());
-  return new Array(2);
+import moment from "moment";
+import { ClassData, Note } from "../shared/types";
+
+export const getUpcomingClasses = (classesData: ClassData[]) => {
+  return classesData.filter((item) =>
+    moment().isBetween(item.startDate, item.endDate)
+  );
 };
 
-export const getRecentNotes = (notesData) => {
-  return new Array(2);
+export const getRecentNotes = (notesData: Note[]) => {
+  return notesData.filter((item) =>
+    moment(item.updatedAt).isBetween(
+      moment().subtract(5, "days").toDate(),
+      moment().add(5, "days").toDate()
+    )
+  );
 };
 
-export const getHomeSummaryData = (notesData, classesData) => {
+export const getHomeSummaryData = (
+  notesData: Note[],
+  classesData: ClassData[]
+) => {
   return {
     upcomingClasses: getUpcomingClasses(classesData),
     recentNotes: getRecentNotes(notesData),

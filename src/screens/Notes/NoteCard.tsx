@@ -17,24 +17,27 @@ import { theme } from "../../shared/theme";
 import { CONSTANTS } from "../../shared/constants";
 import { getRandomColor, truncateString } from "../../services/uiService";
 import { Note } from "../../shared/types";
+import { Dimensions } from "react-native";
 
 type Props = {
   orientation: "horizontal" | "vertical";
   item: Note;
+  index: number;
 };
 
-const NoteCard = ({ orientation, item }: Props) => {
+const NoteCard = ({ orientation, item, index }: Props) => {
   const { navigate } = useNavigation<NavigationProp<any>>();
-  console.log(item);
-
+  const randomBool = React.useMemo(() => Math.random() < 0.5, []);
   return (
     <TouchableOpacity
-      onPress={() => navigate(CONSTANTS.AppPages.NOTE, { noteId: item.id })}
+      onPress={() => navigate(CONSTANTS.AppPages.NOTE, { noteData: item })}
     >
       <Box
         // minH={"250"}
         // maxH={"300"}
-        w={orientation === "horizontal" ? "360" : "full"}
+        w={Dimensions.get("window").width / 2 - 10}
+        minH={"200"}
+        alignSelf="stretch"
         p="3"
         borderRadius={10}
         bgColor={theme.ACCENT}
@@ -47,41 +50,22 @@ const NoteCard = ({ orientation, item }: Props) => {
             alignItems="center"
             justifyContent="space-between"
           >
-            <HStack space="2" alignItems={"center"}>
-              <IconButton
-                variant={"unstyled"}
-                colorScheme={"coolGray"}
-                bgColor={getRandomColor()}
-                display={"flex"}
-                flexDirection={"row"}
-                alignItems={"flex-start"}
-                icon={
-                  <Icon
-                    as={<Ionicons name="person" />}
-                    color={theme.ACCENT}
-                    size={"sm"}
-                  />
-                }
-              />
-              <VStack space={1}>
-                <Heading fontSize={"sm"} fontWeight={"bold"}>
-                  {item.title}
-                </Heading>
-                <Text
-                  fontSize={9}
-                  color={theme.ACCENT_FOREGROUND}
-                  fontWeight="semibold"
-                >
-                  {format(new Date(), "EEEE,do MMM yyyy")}
-                </Text>
-              </VStack>
-            </HStack>
+            <VStack space={1}>
+              <Text
+                fontSize={9}
+                color={theme.ACCENT_FOREGROUND}
+                fontWeight="semibold"
+              >
+                {format(new Date(), "EEEE,do MMM yyyy")}
+              </Text>
+            </VStack>
             <IconButton
               variant={"unstyled"}
               colorScheme={"coolGray"}
               bgColor={"transparent"}
               display={"flex"}
               flexDirection={"row"}
+              rounded={"full"}
               alignItems={"flex-start"}
               _pressed={{
                 backgroundColor: "coolGray.600",
@@ -95,13 +79,21 @@ const NoteCard = ({ orientation, item }: Props) => {
               }
             />
           </View>
+
+          <Heading fontSize={"sm"} fontWeight={"bold"}>
+            {item.title}
+          </Heading>
+
           <Text
             color={theme.FOREGROUND_2}
             fontSize={"xs"}
             fontWeight={"normal"}
             lineHeight={22}
           >
-            {truncateString(item.content, 200)}
+            {truncateString(
+              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, suscipit amet nam, accusamus obcaecati aliquid ea atque facilis magnam eligendi ratione perspiciatis repellat tenetur odio doloribus, vel enim quam distinctio.",
+              200
+            )}
           </Text>
         </VStack>
       </Box>

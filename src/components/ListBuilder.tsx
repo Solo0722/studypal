@@ -17,6 +17,7 @@ type Props = {
   ListFooterComponent?: ComponentType<any>;
   ListHeaderComponent?: ComponentType<any>;
   numColumns?: number;
+  columnWrapperStyle?: object;
   keyExtractor?: (item: any) => string;
   extraData?: any;
   initialNumToRender?: number;
@@ -54,6 +55,7 @@ const ListBuilder = (props: Props) => {
         ListFooterComponent={props.ListFooterComponent}
         ListHeaderComponent={props.ListHeaderComponent}
         numColumns={props.numColumns}
+        columnWrapperStyle={props.columnWrapperStyle}
         keyExtractor={props.keyExtractor}
         extraData={props.extraData}
         initialNumToRender={props.initialNumToRender}

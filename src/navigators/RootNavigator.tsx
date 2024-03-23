@@ -26,6 +26,7 @@ import { Iconify } from "react-native-iconify";
 import DrawerContent from "../components/DrawerContent";
 import CreateEditClass from "../screens/Classes/CreateEditClass";
 import SyncPage from "../screens/Auth/SyncPage";
+import CreateEditTask from "../screens/Tasks/CreateEditTask";
 
 enableScreens(true);
 
@@ -66,15 +67,19 @@ const RootNavigator = () => {
           borderBottomLeftRadius: 14,
           borderBottomRightRadius: 14,
         },
+        headerStatusBarHeight: 40,
+        swipeEdgeWidth: 100,
+        swipeMinDistance: 50,
+        swipeEnabled: true,
       }}
     >
       <Drawer.Screen name={AppPages.HOME} component={Home} />
-      <Drawer.Screen name={AppPages.NOTES} component={Notes} />
       <Drawer.Screen name={AppPages.CALENDAR} component={Calendar} />
-      <Drawer.Screen name={AppPages.CLASSES} component={Classes} />
+      <Drawer.Screen name={AppPages.NOTES} component={Notes} />
       <Drawer.Screen name={AppPages.TASKS} component={Tasks} />
+      <Drawer.Screen name={AppPages.CLASSES} component={Classes} />
       <Drawer.Screen name={AppPages.EXAMS} component={Exams} />
-      <Drawer.Screen name={AppPages.PROFILE} component={Profile} />
+      <Drawer.Screen name={AppPages.SETTINGS} component={Profile} />
     </Drawer.Navigator>
   );
 
@@ -105,6 +110,7 @@ const RootNavigator = () => {
             borderBottomLeftRadius: 14,
             borderBottomRightRadius: 14,
           },
+          headerStatusBarHeight: 40,
         }}
       >
         <Stack.Screen name={AppPages.NOTE} component={Note} />
@@ -115,6 +121,10 @@ const RootNavigator = () => {
         <Stack.Screen
           name={AppPages.CREATEEDITCLASS}
           component={CreateEditClass}
+        />
+        <Stack.Screen
+          name={AppPages.CREATEEDITTASK}
+          component={CreateEditTask}
         />
       </Stack.Group>
       <Stack.Screen name={AppPages.MAINPAGES} component={MainPages} />
